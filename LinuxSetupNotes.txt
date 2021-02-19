@@ -10,9 +10,9 @@ Install:
 	rofi
 	i3status error: created ~/.i3/i3blocks.conf
 	feh
-	i3lock backgrounds: ~/.xlock
 	i3lock configs: ~/.bin/scripts/lockpretty.sh (or lockpixelate.sh) and >_ chmod a+x lockpretty.sh
-
+	i3lock backgrounds: lockpretty.sh refers to lock screen backgrounds which are kept in ~/.xlock
+	
 Cinnamon:
 	https://www.addictivetips.com/ubuntu-linux-tips/backup-the-cinnamon-desktop-settings-on-linux/
 	Backup:
