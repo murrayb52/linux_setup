@@ -8,11 +8,15 @@ Install:
 	i3-gaps
 	compton
 	rofi
-	i3status error: created ~/.i3/i3blocks.conf
 	feh
+
+Issues:
+	Restore dotfiles from Github
+	i3 configuration: restore .config/i3.config
+	i3status error: create ~/.i3/i3blocks.config
+	i3lock backgrounds: restore to ~/.xlock
 	i3lock configs: ~/.bin/scripts/lockpretty.sh (or lockpixelate.sh) and >_ chmod a+x lockpretty.sh
-	i3lock backgrounds: lockpretty.sh refers to lock screen backgrounds which are kept in ~/.xlock
-	
+
 Cinnamon:
 	https://www.addictivetips.com/ubuntu-linux-tips/backup-the-cinnamon-desktop-settings-on-linux/
 	Backup:
@@ -28,3 +32,7 @@ Cinnamon:
 Tweaks:
 	Firefox
 		Enable autoscrolling for middle-click scrolling
+	Spotify
+		Spotify doesn't "[set] the hints when mapping the window" which requires this workaround to assign it to a specific window.
+		https://github.com/i3/i3/issues/2060
+		for_window [class="Spotify"] move to workspace $ws10
