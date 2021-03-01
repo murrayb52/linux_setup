@@ -13,11 +13,8 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:System San Francisco Display 9
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:Hack, FontAwesome 10
+#System San Francisco Display 9
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -29,6 +26,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -48,8 +47,8 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 # bindsym $mod+d exec dmenu_run
-#bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/ribbon/launcher.sh
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
+bindsym $mod+d exec rofi -show run
+#bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -146,7 +145,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # force applications to open in specific workspace
 assign [class="Firefox"] $ws1
 assign [class="Thunar"] $ws3
-assign [class="Spotify"] $ws10
+for_window [class="Spotify"] move to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -196,25 +195,9 @@ client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        #status_command i3status
-        # use -c to instruct i3blocks where to find configuration file
-        status_command i3blocks -c /home/bozo/.i3/i3blocks.conf	
-	colors {
-		background $bg-color
-	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-	}
-}
-
 # Custom commands made by user
-bindsym $mod+shift+Escape exec ~/.bin/scripts/lockpretty.sh
-
+bindsym $mod+shift+Escape exec ~/.bin/scripts/lockgraphic.sh
+bindsym $mod+n exec thunar
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
@@ -224,10 +207,23 @@ bindsym XF86AudioPrev exec playerctl previous
 # Automatic loading with i3 startup
 # Use 'exec' to load on machine startup
 # Use 'exec_always' to load for every i3 restart
-# 	Load wallpaper
-exec_always feh --bg-scale /usr/share/backgrounds/linuxmint-ulyssa/sferrara_matterhorn.jpg
+# Load wallpaper
+exec_always feh --bg-scale .xlock/background_leaves1.png
 #	Open Firefox
 exec firefox
 exec spotify
 # compton allows opacity with rofi search
 exec compton -f
+
+####################################
+# i3-gaps
+# https://github.com/Airblader/i3
+# ##################################
+#You can also use any non-zero value if you'd like to have a border
+for_window [class=".*"] border pixel 5
+gaps inner 10
+gaps outer 0
+smart_borders on
+smart_gaps on
+# define gaps per workspace with the following:
+# workspace <ws> gaps [inner|outer|horizontal|vertical|top|left|bottom|right] <px>
