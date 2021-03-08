@@ -205,7 +205,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl play-pause
-bindsym --whole-window button8 exec playerctl play-pause
+bindsym --whole-window button9 exec playerctl play-pause
 
 # Automatic loading with i3 startup
 # Use 'exec' to load on machine startup
