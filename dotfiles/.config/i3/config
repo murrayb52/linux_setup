@@ -198,11 +198,14 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 # Custom commands made by user
 bindsym $mod+shift+Escape exec ~/.bin/scripts/lockgraphic.sh
 bindsym $mod+n exec thunar
+bindsym $mod+c exec speedcrunch
+
 # Media player controls
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym --whole-window button8 exec playerctl play-pause
 
 # Automatic loading with i3 startup
 # Use 'exec' to load on machine startup
