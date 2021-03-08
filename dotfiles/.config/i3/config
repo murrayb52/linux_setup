@@ -144,8 +144,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # force applications to open in specific workspace
 assign [class="Firefox"] $ws1
-assign [class="Thunar"] $ws3
+assign [class="Thunar"] $ws4
 for_window [class="Spotify"] move to workspace $ws10
+assign [class="jetbrains-pycharm-ce"] $ws3
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -197,9 +198,9 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # Custom commands made by user
 bindsym $mod+shift+Escape exec ~/.bin/scripts/lockgraphic.sh
-bindsym $mod+n exec thunar
+bindsym $mod+n workspace $ws4; exec thunar
 bindsym $mod+c exec speedcrunch
-
+bindsym $mod+p workspace $ws3 exec /opt/pycharm-*/bin/pycharm.sh
 # Media player controls
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
