@@ -38,4 +38,5 @@ Tweaks:
 		for_window [class="Spotify"] move to workspace $ws10
 		
 Virtual Environment Setup:
-	Install specific Django version in virtual environment.
+	Install specific Django version in virtual environment:
+	https://www.howtoforge.com/tutorial/how-to-install-django-on-ubuntu/
