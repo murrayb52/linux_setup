@@ -44,6 +44,8 @@ Virtual Environment Setup:
 	
 Mouse bindings:
 	Detect bindings >_xev | grep button
+	Use "--whole-window" to apply when cursor is at any position on window
+	bindsym --whole-window button8 exec playerctl play-pause
 	
 Media key bindings:
 	Command line media controls: >_ apt install playerctl
