@@ -40,3 +40,6 @@ Tweaks:
 Virtual Environment Setup:
 	Install specific Django version in virtual environment:
 	https://www.howtoforge.com/tutorial/how-to-install-django-on-ubuntu/
+	
+Mouse bindings:
+	Detect bindings >_xev | grep button
