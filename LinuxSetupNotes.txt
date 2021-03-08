@@ -9,6 +9,7 @@ Install:
 	compton
 	rofi
 	feh
+	playerctl
 
 Issues:
 	Restore dotfiles from Github
@@ -43,3 +44,8 @@ Virtual Environment Setup:
 	
 Mouse bindings:
 	Detect bindings >_xev | grep button
+	
+Media key bindings:
+	Command line media controls: >_ apt install playerctl
+	Determine key press: >_ xmodmap -pke
+	https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
