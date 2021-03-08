@@ -36,3 +36,6 @@ Tweaks:
 		Spotify doesn't "[set] the hints when mapping the window" which requires this workaround to assign it to a specific window.
 		https://github.com/i3/i3/issues/2060
 		for_window [class="Spotify"] move to workspace $ws10
+		
+Virtual Environment Setup:
+	Install specific Django version in virtual environment.
