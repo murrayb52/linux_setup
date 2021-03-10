@@ -9,7 +9,7 @@ enable-ipc = true
 bottom = false
 ;dock = false
 width = 100%
-height = 32
+height = 28
 lineheight = 10
 ;border-top = 0
 ;border-bottom = 0
@@ -18,11 +18,12 @@ lineheight = 10
 padding-left = 0
 padding-right = 0
 
-font-0 = CozetteVector-Regular:size=10;3
+;font-0 = CozetteVector-Regular:size=10;3
+font-0 = FontAwesome:size=10;1
 font-1 = FontAwesome:size=9;3
 font-2 = FontAwesome5Free:style=Solid:size=12;2
 font-3 = FontAwesome5Free:style=Regular:size=9;1
-font-4 = FontAwesome5Brands:style=Regular:size=14;1
+font-4 = FontAwesome5Brands:style=Regular:size=14;2
 ;font-5 = -wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1
 
 ;margin between modules
@@ -244,7 +245,6 @@ format-discharging = <animation-discharging><label-discharging>
 format-full = <label-full>
 label-full-foreground = #ff1d2027
 label-full-background = #718893
-
 ;Available tokens: %percentage% %consumption% (shows current charge rate in watts)
 label-charging = "%percentage%% "
 label-charging-foreground = #ff1d2027
@@ -253,13 +253,13 @@ label-charging-background = #718893
 ;Available tokens: %percentage% %consumption% (shows current discharge rate in watts)
 label-discharging = "%percentage%% "
 label-discharging-foreground = #ff1d2027
-label-discharging-background = #718893
+label-discharging-background = #718
 
 ;Available tokens: %percentage%
 label-full = "  %percentage%% "
 
 ;Only applies if <ramp-capacity> is used
-ramp-foreground = #ff1d2027
+ramp-foreground = #
 ramp-background = #718893
 ramp-capacity-0 = "  " ;empty
 ramp-capacity-1 = "  " ;mid-battery
@@ -278,7 +278,7 @@ animation-charging-framerate = 750
 animation-discharging-0 = "  "
 animation-discharging-1 = "  "
 animation-discharging-foreground = #ff1d2027
-animation-discharging-background = #718893
+animation-discharging-background = #718
 
 ;Framerate in milliseconds
 animation-discharging-framerate = 750
