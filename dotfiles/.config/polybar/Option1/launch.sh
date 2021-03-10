@@ -1,11 +1,22 @@
-#!/bin/bash
-# Godkayaki ~
-# Show Spotify current song without mpd or any extra application other than spotify.
+# Taken from: https://github.com/reedrw/dotfiles/blob/master/config/polybar/launch.sh
 
-if pgrep -x "spotify" > /dev/null; then
-    artist=`playerctl --player=spotify metadata artist`
-    title=`playerctl --player=spotify metadata title`
-    echo "" $artist "-" $title
+#!/usr/bin/env sh
+
+# Terminate already running bar instances
+# killall -q polybar
+
+# Wait until the processes have been shut down
+# while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
+
+# Launch bar1 and bar2
+#polybar base &
+
+sleep .5
+
+if ! pgrep -x polybar; then
+	polybar Bar &
 else
-    echo ""
+	pkill -USR1 polybar
 fi
+
+echo "Bars launched..."
