@@ -51,3 +51,12 @@ Media key bindings:
 	Command line media controls: >_ apt install playerctl
 	Determine key press: >_ xmodmap -pke
 	https://faq.i3wm.org/question/3747/enabling-multimedia-keys.1.html
+	
+	
+Polybar config:
+https://polybar.readthedocs.io/en/stable/user/actions.html#internal-i3
+Fallback to i3 ws naming: https://www.reddit.com/r/Polybar/comments/b5d8ml/polybar_workspace_label/
+
+Fonts:
+https://github.com/FortAwesome/Font-Awesome
+https://github.com/slavfox/Cozette
