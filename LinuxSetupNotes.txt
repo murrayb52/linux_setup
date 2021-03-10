@@ -63,3 +63,11 @@ https://github.com/slavfox/Cozette
 
 Inspiration:
 https://github.com/kanishkarj/i3-config
+
+Colour schemes:
+https://github.com/dylanaraps/pywal
+>_ pip3 install pywal
+Set terminal colour scheme based on image: >_ wal -i .xlock/background_leaves1.png
+# Add this to your /etc/X11/xinit/xinitrc or whatever file starts programs on startup (possibly ~/.xinitrc).
+# -R restores the last colorscheme that was in use.
+wal -R
