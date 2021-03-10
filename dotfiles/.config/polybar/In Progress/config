@@ -136,9 +136,6 @@ modules-right = spotify spotify-prev spotify-play-pause spotify-next
 ;tray-padding = 0
 ;tray-background = #0063ff
 
-;wm-restack = bspwm
-;wm-restack = i3
-
 ;override-redirect = true
 
 ;scroll-up = i3wm-wsnext
@@ -156,19 +153,23 @@ tail = true
 [module/spotify]
 type = custom/script
 exec = ~/.config/polybar/spotify.sh
+interval =5
+maxlen = 40
+ellipsis = true
 tail = true
-;prefix symbol is shown before the text
-format-prefix = "  "
-format-prefix-foreground = ${colors.green}
-;format-prefix-foreground = ${colors.foreground}
-format = <label>
+format-padding = 1
 
+;prefix symbol is shown before the text
+format-prefix = "  "
+;format-prefix-foreground = ${colors.green}
+format-prefix-foreground = ${colors.foreground}
+format = <label>
 
 [module/spotify-prev]
 type = custom/script
 exec = echo " "
-format-foreground = ${colors.red}
-;format-foreground = ${colors.foreground}
+;format-foreground = ${colors.red}
+format-foreground = ${colors.foreground}
 format = <label>
 click-left = playerctl previous spotify
 
