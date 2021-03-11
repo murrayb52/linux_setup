@@ -87,6 +87,7 @@ Set terminal colour scheme based on image: >_ wal -i .xlock/background_leaves1.p
 # Add the following line to your /etc/X11/xinit/xinitrc or whatever file starts programs on startup (possibly ~/.xinitrc).
 # -R restores the last colorscheme that was in use.
 wal -R
+Pywal usage: https://github.com/dylanaraps/pywal/wiki
 
 Themes:
 Nordic: https://github.com/EliverLara/Nordic
