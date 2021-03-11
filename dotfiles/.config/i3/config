@@ -216,7 +216,7 @@ bindsym --whole-window button9 exec playerctl play-pause
 # Use 'exec' to load on machine startup
 # Use 'exec_always' to load for every i3 restart
 # Load wallpaper
-exec_always feh --bg-scale .xlock/background_leaves1.png
+exec_always feh --bg-scale .wallpapers/background_leaves1.png
 #	Open Firefox
 exec firefox
 exec spotify
