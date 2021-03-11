@@ -80,7 +80,7 @@ Colour schemes:
 https://github.com/dylanaraps/pywal
 >_ pip3 install pywal
 Set terminal colour scheme based on image: >_ wal -i .xlock/background_leaves1.png
-# Add this to your /etc/X11/xinit/xinitrc or whatever file starts programs on startup (possibly ~/.xinitrc).
+# Add the following line to your /etc/X11/xinit/xinitrc or whatever file starts programs on startup (possibly ~/.xinitrc).
 # -R restores the last colorscheme that was in use.
 wal -R
 
@@ -94,3 +94,10 @@ https://github.com/EliverLara/Nordic
 Xresources issue:
 https://wiki.debian.org/Xresources
 https://i3wm.org/docs/userguide.html#xresources
+
+D-bus linking issue with 'make':
+https://stackoverflow.com/questions/15239560/d-bus-linking-issue
+
+Redshift:
+https://help.ubuntu.com/community/Redshift
+https://askubuntu.com/questions/565963/how-can-i-set-a-certain-temperature-on-redshift
