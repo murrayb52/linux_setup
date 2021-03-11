@@ -58,6 +58,7 @@ https://polybar.readthedocs.io/en/stable/user/actions.html#internal-i3
 Fallback to i3 ws naming: https://www.reddit.com/r/Polybar/comments/b5d8ml/polybar_workspace_label/
 https://github.com/polybar/polybar/wiki/Fonts
 https://polybar.readthedocs.io/en/latest/user/actions.html
+Temperature module: https://github.com/polybar/polybar/wiki/Module:-temperature
 
 Fonts:
 https://github.com/FortAwesome/Font-Awesome
