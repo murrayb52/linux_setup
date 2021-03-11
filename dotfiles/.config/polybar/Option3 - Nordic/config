@@ -340,7 +340,7 @@ click-right = pavucontrol &
 
 [module/playerctl]
 type = custom/script
-exec = $HOME/.config/polybar/scripts/player-mpris-simple.sh
+exec = $HOME/.config/polybar/player-mpris-simple.sh
 interval = 2
 click-left = playerctl play-pause &
 format = <label>
