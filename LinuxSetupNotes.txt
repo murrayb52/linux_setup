@@ -54,19 +54,27 @@ Media key bindings:
 	
 	
 Polybar config:
-Download: https://github.com/polybar/polybar
 https://polybar.readthedocs.io/en/stable/user/actions.html#internal-i3
-https://github.com/polybar/polybar/wiki
-https://github.com/polybar/polybar/wiki/Configuration#bar-settings
+Fallback to i3 ws naming: https://www.reddit.com/r/Polybar/comments/b5d8ml/polybar_workspace_label/
 https://github.com/polybar/polybar/wiki/Fonts
-Fallback to i3-ws naming: https://www.reddit.com/r/Polybar/comments/b5d8ml/polybar_workspace_label/
+https://polybar.readthedocs.io/en/latest/user/actions.html
 
 Fonts:
 https://github.com/FortAwesome/Font-Awesome
 https://github.com/slavfox/Cozette
+Refresh fonts: >_ fc-cache ~/.fonts
 
 Inspiration:
 https://github.com/kanishkarj/i3-config
+https://www.reddit.com/r/unixporn/comments/ln0ik7/i3_gaps_what_is_your_current_shell_prompt_this/
+https://www.reddit.com/r/unixporn/comments/791cw8/i3gaps_compton_playing_with_blurs_fading_effects/
+https://www.reddit.com/r/unixporn/comments/7wyzl1/i3_something_different/
+https://www.reddit.com/r/unixporn/comments/b2fgij/i3gaps_with_blur/
+https://www.reddit.com/r/unixporn/comments/m2dyqu/i3gaps_i3_nord_rice/
+
+Rounded corners:
+https://www.reddit.com/r/unixporn/comments/benebi/i3gaps_i3_rounded_corners/
+https://github.com/resloved/i3/pull/3/commits/098c69ec075833597b42891ddbf668f64429d072
 
 Colour schemes:
 https://github.com/dylanaraps/pywal
@@ -75,3 +83,14 @@ Set terminal colour scheme based on image: >_ wal -i .xlock/background_leaves1.p
 # Add this to your /etc/X11/xinit/xinitrc or whatever file starts programs on startup (possibly ~/.xinitrc).
 # -R restores the last colorscheme that was in use.
 wal -R
+
+Themes:
+Nordic: https://github.com/EliverLara/Nordic
+Extract the zip file to the themes directory i.e. /usr/share/themes/ or ~/.themes/
+
+Icon themes:
+https://github.com/EliverLara/Nordic
+
+Xresources issue:
+https://wiki.debian.org/Xresources
+https://i3wm.org/docs/userguide.html#xresources
