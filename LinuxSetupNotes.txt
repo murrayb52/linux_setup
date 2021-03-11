@@ -73,6 +73,8 @@ https://www.reddit.com/r/unixporn/comments/791cw8/i3gaps_compton_playing_with_bl
 https://www.reddit.com/r/unixporn/comments/7wyzl1/i3_something_different/
 https://www.reddit.com/r/unixporn/comments/b2fgij/i3gaps_with_blur/
 https://www.reddit.com/r/unixporn/comments/m2dyqu/i3gaps_i3_nord_rice/
+https://github.com/ngynLk/polybar-themes
+Animated polybar menu: https://www.reddit.com/r/unixporn/comments/92guq6/i3polybar_animated_polybar_drop_down_menus/
 
 Rounded corners:
 https://www.reddit.com/r/unixporn/comments/benebi/i3gaps_i3_rounded_corners/
