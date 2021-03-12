@@ -106,3 +106,7 @@ https://stackoverflow.com/questions/15239560/d-bus-linking-issue
 Redshift:
 https://help.ubuntu.com/community/Redshift
 https://askubuntu.com/questions/565963/how-can-i-set-a-certain-temperature-on-redshift
+
+i3lock:
+i3lock -i wallpaper.png
+Convert all jpg's in folder to png: find . -name "*.jpg" -exec mogrify -format png {} \;
