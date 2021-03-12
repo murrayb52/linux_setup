@@ -11,5 +11,5 @@ if [ "$player_status" = "Playing" ]; then
 elif [ "$player_status" = "Paused" ]; then
     echo "Paused"
 else
-    echo "Failed to fetch Spotify data"
+    echo ""
 fi
