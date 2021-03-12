@@ -110,3 +110,5 @@ https://askubuntu.com/questions/565963/how-can-i-set-a-certain-temperature-on-re
 i3lock:
 i3lock -i wallpaper.png &
 Convert all jpg's in folder to png: find . -name "*.jpg" -exec mogrify -format png {} \;
+i3lock is intentionally kept minimal so scaling is not included:
+	convert -scale 1920x1080 source-image.png lockscreen.png
