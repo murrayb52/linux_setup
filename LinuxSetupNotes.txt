@@ -115,3 +115,4 @@ i3lock is intentionally kept minimal so scaling is not included:
 	
 Prevent hibernation/sleep:
 https://forums.linuxmint.com/viewtopic.php?t=114005
+xset -dpms;xset s off
