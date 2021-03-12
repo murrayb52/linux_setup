@@ -13,7 +13,7 @@ gray       = #8dabc8
 
 [vars]
 spacing = 0
-
+menu-spacing = 4
 
 [bar/main]
 ;enable-ipc = true
@@ -36,13 +36,13 @@ padding-right = 5
 module-margin-left = 1
 module-margin-right = 1 
 
-font-0 = "FontAwesome:size=12;5"
-font-1 = Hack-Regular:size=10.5;5
+font-0 = "FontAwesome:size=12;6"
+font-1 = Hack-Regular:size=10.5;6
 ;font-0 applies to the all icons
 ;font-1 applies to all bar text
 modules-left = time
 modules-center = i3
-modules-right = playerctl playerctl-prev playerctl-play playerctl-next
+modules-right = playerctl playerctl-prev playerctl-playpause playerctl-next
 tray-position = right
 tray-underline = ${color.c4}
 line-size = 1.5
@@ -114,7 +114,7 @@ label-padding = 1
 
 [module/power]
 type = custom/menu
-expand-right = true
+expand-left = true
 label-open = 
 label-close = 
 ;label-separator = " "
@@ -131,11 +131,13 @@ menu-0-0-padding = 2
 menu-0-0-background = ${color.highlight}
 menu-0-0-exec = menu-open-1
 menu-0-0-overline = ${color.accent}
-menu-1-0 = confirm
-menu-1-0-exec = poweroff &
+menu-1-0 = cancel
+menu-1-0-padding = ${vars.menu-spacing}
+menu-1-0-exec = menu-close
 menu-1-0-overline = ${color.accent}
-menu-1-1 = cancel
-menu-1-1-exec = menu-open-0
+menu-1-1 = confirm
+menu-1-1-padding = ${vars.menu-spacing}
+menu-1-1-exec = poweroff &
 menu-1-1-overline = ${color.accent}
 
 ;Reboot menu
@@ -144,42 +146,45 @@ menu-0-1-padding = 2
 menu-0-1-background = ${color.highlight}
 menu-0-1-exec = menu-open-2
 menu-0-1-overline = ${color.accent}
-menu-2-0 = confirm
-menu-2-0-exec = reboot &
+menu-2-0 = cancel
+menu-2-0-padding = ${vars.menu-spacing}
+menu-2-0-exec = menu-close
 menu-2-0-overline = ${color.accent}
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
+menu-2-1 = confirm
+menu-2-1-padding = ${vars.menu-spacing}
+menu-2-1-exec = reboot &
 menu-2-1-overline = ${color.accent}
 
-;Lock menu
-menu-0-2 = 
+;Logout menu
+menu-0-2 = 
 menu-0-2-padding = 2
 menu-0-2-background = ${color.highlight}
 menu-0-2-underline = ${color.accent}
-menu-0-2-exec = ~/.bin/scripts/lockgraphic.sh
+menu-0-2-exec = menu-open-3
 menu-0-2-overline = ${color.accent}
-
-;Logout menu
-menu-0-3 = 
-menu-0-3-padding = 2
-menu-0-3-background = ${color.highlight}
-menu-0-3-underline = ${color.accent}
-menu-0-3-exec = menu-open-3
-menu-0-3-overline = ${color.accent}
 menu-3-0 = logout
+menu-3-0-padding = ${vars.menu-spacing}
 menu-3-0-exec = i3-msg exit
 menu-3-0-overline = ${color.accent}
 menu-3-1 = cancel
-menu-3-1-exec = menu-open-0
+menu-3-1-padding = ${vars.menu-spacing}
+menu-3-1-exec = menu-close
 menu-3-1-overline = ${color.accent}
 
 ; Switch user menu
-menu-0-4 = 
+menu-0-3 = 
+menu-0-3-padding = 2
+menu-0-3-background = ${color.highlight}
+menu-0-3-exec = dm-tool switch-to-greeter
+menu-0-3-overline = ${color.accent}
+
+;Lock menu
+menu-0-4 = 
 menu-0-4-padding = 2
 menu-0-4-background = ${color.highlight}
-menu-0-4-exec = dm-tool switch-to-greeter
+menu-0-4-underline = ${color.accent}
+menu-0-4-exec = ~/.bin/scripts/lockwallpaper.sh
 menu-0-4-overline = ${color.accent}
-
 
 [module/mem]
 type = internal/memory
@@ -223,7 +228,7 @@ type = custom/script
 exec = expr $(apt list --upgradable 2>/dev/null | wc -l) - 1
 format = <label>
 interval = 300
-label =  %output% updates
+label = 12 %output% updates
 label-padding = ${vars.spacing}
 
 
@@ -238,6 +243,7 @@ format-disconnected = <label-disconnected>
 label-disconnected =  disconnected
 label-disconnected-padding = ${vars.spacing}
 
+
 [module/local-ip]
 type = internal/network
 interface = wlp2s0
@@ -248,6 +254,7 @@ label-connected-padding = ${vars.spacing}
 format-disconnected = <label-disconnected>
 label-disconnected = 
 label-disconnected-padding = ${vars.spacing}
+
 
 [module/ipv4]
 type = custom/script
@@ -323,8 +330,8 @@ bar-volume-empty-foreground = ${color.text}
 [module/playerctl]
 type = custom/script
 exec = $HOME/.config/polybar/spotify.sh
-interval = 2
-click-left = playerctl play-pause &
+interval = 1
+click-left = i3wm-wsfocus-10: Spotify  
 format = <label>
 label = %output%
 format-padding = ${vars.spacing}
@@ -332,31 +339,27 @@ format-padding = ${vars.spacing}
 
 [module/playerctl-next]
 type = custom/text
-content = 
+content = 
 click-left = playerctl next &
 content-padding = 2
 
 
 [module/playerctl-prev]
 type = custom/text
-content =  
+content =  
 click-left = playerctl previous &
 content-padding = 2
 
 
-[module/playerctl-stop]
-type = custom/text
-content = 
-click-left = playerctl stop &
-content-padding = 2
-
-
-[module/playerctl-play]
-type = custom/text
-content =   
-click-left = i3wm-wsfocus-10 
-;click-left = playerctl play-pause &
-content-padding = 2
+[module/playerctl-playpause]
+type = custom/script
+exec = ~/.config/polybar/playpause.sh
+interval = 1
+click-left = playerctl play-pause &
+click-middle = spotify &
+format = <label>
+label = %output%
+format-padding = ${vars.spacing}
 
 
 [module/rofi]
@@ -365,16 +368,11 @@ content = 
 click-left = rofi -show drun
 content-padding = ${vars.spacing}
 
+
 [module/firefox]
 type = custom/text
 content = 
 click-left = firefox &
-content-padding = ${vars.spacing}
-
-[module/mail]
-type = custom/text
-content = 
-click-left = thunderbird &
 content-padding = ${vars.spacing}
 
 
@@ -396,13 +394,6 @@ content-padding = ${vars.spacing}
 type = custom/text
 content = 
 click-left = /opt/pycharm-*/bin/pycharm.sh &
-content-padding = ${vars.spacing}
-
-
-[module/mousepad]
-type = custom/text
-content = 
-click-left = mousepad &
 content-padding = ${vars.spacing}
 
 
