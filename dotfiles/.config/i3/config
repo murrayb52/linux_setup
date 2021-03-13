@@ -212,7 +212,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl play-pause
-bindsym --whole-window button9 exec playerctl play-pause
+bindsym --whole-window button9 exec playerctl -p spotify play-pause
+bindsym --whole-window button8 exec playerctl -p firefox.instance1643 play-pause
 
 # Automatic loading with i3 startup
 # Use 'exec' to load on machine startup
@@ -234,6 +235,6 @@ for_window [class=".*"] border pixel 5
 gaps inner 10
 gaps outer 0
 smart_borders on
-smart_gaps on
+#smart_gaps on
 # define gaps per workspace with the following:
 # workspace <ws> gaps [inner|outer|horizontal|vertical|top|left|bottom|right] <px>
