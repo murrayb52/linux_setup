@@ -340,14 +340,14 @@ format-padding = ${vars.spacing}
 [module/playerctl-next]
 type = custom/text
 content = 
-click-left = playerctl next &
+click-left = playerctl -p spotify next &
 content-padding = 2
 
 
 [module/playerctl-prev]
 type = custom/text
 content =  
-click-left = playerctl previous &
+click-left = playerctl -p spotify previous &
 content-padding = 2
 
 
@@ -355,7 +355,7 @@ content-padding = 2
 type = custom/script
 exec = ~/.config/polybar/playpause.sh
 interval = 1
-click-left = playerctl play-pause &
+click-left = playerctl -p spotify play-pause &
 click-middle = spotify &
 format = <label>
 label = %output%
