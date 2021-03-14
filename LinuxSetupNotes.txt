@@ -123,9 +123,13 @@ Play/pause specific player: >_ playerctl -p spotify play-pause
 
 Terminal:
 	Spaceship requires zsh terminal	
-	>_ apt install zsh
+	>_ apt install git wget zsh
 	Check installed correctly:
 	>_ zsh --version
+	Install oh-my-zsh:
+	>_ git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+	Change default shell to zsh through symbolic link:
+	>_ chsh -s /bin/zsh
 	Setup zsh:
 	>_ zsh
 	>_ 2
