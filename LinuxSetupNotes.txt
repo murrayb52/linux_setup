@@ -122,20 +122,27 @@ List all media players in playerctl: >_ playerctl -l
 Play/pause specific player: >_ playerctl -p spotify play-pause
 
 Terminal:
-	Spaceship requires zsh terminal	
+	Install zsh terminal	
 	>_ apt install git wget zsh
 	Check installed correctly:
 	>_ zsh --version
 	Install oh-my-zsh:
 	>_ git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
-	Change default shell to zsh through symbolic link:
+	Change default shell to zsh:
 	>_ chsh -s /bin/zsh
-	Setup zsh:
-	>_ zsh
-	>_ 2
-	Set default shell by making symbolic link:
-	>_ chsh -s /bin/zsh [user]
-	Install required fonts from :https://github.com/tonsky/FiraCode
+	Reboot PC
+	Check shell in use. Should return "/bin/zsh":
+	>_ echo "$SHELL"
+	
+	Install Spaceship
+	>_ sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "~/.oh-my-zsh/themes/spaceship-prompt" --depth=1
+	Change permissions for spaceship theme:
+	>_ sudo chmod ~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme
+	Symlink spaceship.zsh-theme to your oh-my-zsh custom themes directory:
+	>_ sudo ln -s "~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme" "~/.oh-my-zsh/themes/spaceship.zsh-theme"
+	Restart terminal.
+	
+	Install required fonts from: https://github.com/tonsky/FiraCode
 	>_ unzip fonts-master.zip
 	>_ cd fonts-master
 	>_ sh install.sh
