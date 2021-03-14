@@ -120,3 +120,19 @@ xset -dpms;xset s off
 Media interaction:
 List all media players in playerctl: >_ playerctl -l
 Play/pause specific player: >_ playerctl -p spotify play-pause
+
+Terminal:
+	Spaceship requires zsh terminal	
+	>_ apt install zsh
+	Check installed correctly:
+	>_ zsh --version
+	Setup zsh:
+	>_ zsh
+	>_ 2
+	Set default shell by making symbolic link:
+	>_ chsh -s /bin/zsh [user]
+	Install required fonts from :https://github.com/tonsky/FiraCode
+	>_ unzip fonts-master.zip
+	>_ cd fonts-master
+	>_ sh install.sh
+	Fonts installed by default to: ~/.local/share/fonts
