@@ -156,6 +156,7 @@ Terminal:
 	Install dependencies: python 3.5+, imagemagick, procps, mint, feh
 	Pip3 is needed to install pywal: >_ sudo apt install python3-pip
 	>_ pip3 install pywal
+	If wal isn't found, create a symlink for new terminal:
 	>_ export PATH="${PATH}:${HOME}/.local/bin/"
 	Set terminal coloursbased on image with: >_ wal -i [path-to-image.png]
 	Permanent changes require these instructions to be followed unless the .zshrc file installed to the computer already contains the relevant lines.
