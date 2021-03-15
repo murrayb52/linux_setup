@@ -134,23 +134,9 @@ Terminal:
 	Check shell in use. Should return "/bin/zsh":
 	>_ echo "$SHELL"
 	
-	Install Spaceship
-	>_ sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "~/.oh-my-zsh/themes/spaceship-prompt" --depth=1
-	Change permissions for spaceship theme:
-	>_ sudo chmod ~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme
-	Symlink spaceship.zsh-theme to your oh-my-zsh custom themes directory:
-	>_ sudo ln -s "~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme" "~/.oh-my-zsh/themes/spaceship.zsh-theme"
-	Restart terminal.
-	
-	Install required fonts from: https://github.com/tonsky/FiraCode
-	>_ unzip fonts-master.zip
-	>_ cd fonts-master
-	>_ sh install.sh
-	Fonts installed by default to: ~/.local/share/fonts
-	
-	Install hyper as your sexy m*****f**king terminal:
-	Donwload from .deb file from: https://hyper.is/
-	>_ sudo dpkg -i hyper*.deb
+	Install powerlevel10k theme for zsh:
+	>_ sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
+	Set ZSH_THEME="powerlevel10k/powerlevel10k" in ~/.zshrc.
 	
 	Use pywal to pick colour scheme:
 	Install dependencies: python 3.5+, imagemagick, procps, mint, feh
@@ -161,3 +147,25 @@ Terminal:
 	Set terminal coloursbased on image with: >_ wal -i [path-to-image.png]
 	Permanent changes require these instructions to be followed unless the .zshrc file installed to the computer already contains the relevant lines.
 		https://github.com/dylanaraps/pywal/wiki/Getting-Started
+	Run the following to set the colour scheme (which will be added to the cache) but without changing the wallpaper background:
+	>_ wal -n -i /PATH/TO/IMG.PNG
+	
+	KEEP THESE OPTIONS PRESENT IN FILE EVEN THOUGH NOT USED
+	Install Spaceship
+		Install required fonts from: https://github.com/tonsky/FiraCode
+		>_ unzip fonts-master.zip
+		>_ cd fonts-master
+		>_ sh install.sh
+		Fonts installed by default to: ~/.local/share/fonts
+	>_ sudo git clone https://github.com/denysdovhan/spaceship-prompt.git "~/.oh-my-zsh/themes/spaceship-prompt" --depth=1
+	Change permissions for spaceship theme:
+	>_ sudo chmod ~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme
+	Symlink spaceship.zsh-theme to your oh-my-zsh custom themes directory:
+	>_ sudo ln -s "~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme" "~/.oh-my-zsh/themes/spaceship.zsh-theme"
+	Restart terminal.
+	
+	Install hyper as your sexy m*****f**king terminal:
+	Donwload from .deb file from: https://hyper.is/
+	>_ sudo dpkg -i hyper*.deb
+		
+	
