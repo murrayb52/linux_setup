@@ -147,3 +147,16 @@ Terminal:
 	>_ cd fonts-master
 	>_ sh install.sh
 	Fonts installed by default to: ~/.local/share/fonts
+	
+	Install hyper as your sexy m*****f**king terminal:
+	Donwload from .deb file from: https://hyper.is/
+	>_ sudo dpkg -i hyper*.deb
+	
+	Use pywal to pick colour scheme:
+	Install dependencies: python 3.5+, imagemagick, procps, mint, feh
+	Pip3 is needed to install pywal: >_ sudo apt install python3-pip
+	>_ pip3 install pywal
+	>_ export PATH="${PATH}:${HOME}/.local/bin/"
+	Set terminal coloursbased on image with: >_ wal -i [path-to-image.png]
+	Permanent changes require these instructions to be followed unless the .zshrc file installed to the computer already contains the relevant lines.
+		https://github.com/dylanaraps/pywal/wiki/Getting-Started
