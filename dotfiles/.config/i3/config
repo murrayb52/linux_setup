@@ -217,7 +217,7 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl play-pause
 bindsym --whole-window button9 exec playerctl -p spotify play-pause
-bindsym --whole-window button8 exec playerctl -p firefox.instance1643 play-pause
+bindsym --whole-window button8 exec playerctl --ignore-player=spotify play-pause
 bindcode $mod+105 exec playerctl -p firefox.instance1643 play-pause
 
 # Automatic loading with i3 startup
