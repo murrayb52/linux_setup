@@ -168,4 +168,14 @@ Terminal:
 	Donwload from .deb file from: https://hyper.is/
 	>_ sudo dpkg -i hyper*.deb
 		
-	
+RGB LED Controls:
+	https://github.com/nagisa/msi-rgb
+	>_ git clone https://github.com/nagisa/msi-rgb
+	>_ cd msi-rgb
+	>_ cargo build --release
+	The hexa numbers represent each color as a sequence in time per byte so 4 changes of colors.
+	This makes turqouise, then purple, then yellow, then white...
+	>_ sudo ./target/release/msi-rgb FF000000 00FF0000 0000FF00
+	Use --disable to disable the lighting
+	Run the following to pulse dim white:
+	>_ sudo ./target/release/msi-rgb FEFEFEFE FEFEFEFE FEFEFEFE -p
