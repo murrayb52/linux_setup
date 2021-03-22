@@ -7,8 +7,9 @@ highlight  = #aa102010
 strong-highlight = #255426
 background = #bb010101
 text	   = #adc0b0
-accent 	   = #548550
-orange     = #567ca4
+accent     = #548550
+dark-green = #006114
+orange     = #bd7023
 gray       = #8dabc8
 
 [vars]
@@ -100,7 +101,8 @@ label-visible-overline = ${color.text}
 label-visible-padding = 1
 
 label-urgent = %name%
-label-urgent-overline = ${color.text}
+label-urgent-underline = ${color.highlight}
+label-urgent-background = ${color.accent}
 label-urgent-padding = 1
 
 [module/time]
