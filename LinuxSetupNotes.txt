@@ -11,6 +11,9 @@ Install:
 	rofi
 	feh
 	playerctl
+	i3lock
+	i3status
+	chmod 777 ~/.config -R
 
 Issues:
 	Restore dotfiles from Github
@@ -18,6 +21,7 @@ Issues:
 	i3status error: create ~/.i3/i3blocks.config
 	i3lock backgrounds: restore to ~/.xlock
 	i3lock configs: ~/.bin/scripts/lockpretty.sh (or lockpixelate.sh) and >_ chmod a+x lockpretty.sh
+	>_ mkdir ~/.xlock and add wallpaper.jpg
 
 Cinnamon:
 	https://www.addictivetips.com/ubuntu-linux-tips/backup-the-cinnamon-desktop-settings-on-linux/
@@ -161,7 +165,14 @@ Terminal:
 	Change permissions for spaceship theme:
 	>_ sudo chmod ~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme
 	Symlink spaceship.zsh-theme to your oh-my-zsh custom themes directory:
-	>_ sudo ln -s "~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme" "~/.oh-my-zsh/themes/spaceship.zsh-theme"
+	>_ln -sf "$PWD/spaceship.zsh" "/usr/local/share/zsh/site-functions/prompt_spaceship_setup"
+	## >_ sudo ln -s "~/.oh-my-zsh/themes/spaceship-prompt/spaceship.zsh-theme" "~/.oh-my-zsh/themes/spaceship.zsh-theme"
+	>_ vim ~/.zshrc
+		"
+		# .zshrc
+		autoload -U promptinit; promptinit
+		prompt spaceship
+		"
 	Restart terminal.
 	
 	Install hyper as your sexy m*****f**king terminal:
