@@ -68,6 +68,13 @@ ln -s ~/projects/linux-setup/linux-setup/notes \
 ```
 ## Common Issues & Fixes
 
+> 📚 **See [[troubleshooting-index]] for a complete list of resolved issues**
+
+### Recent Issues (See Detailed Notes)
+- [[issue-i3-taskbar-not-visible]] - Status bar/taskbar not showing on startup
+- [[issue-polybar-not-showing]] - Polybar configuration and permissions
+- [[issue-ipv4-polybar-module]] - IPv4 address display script fix
+
 ### Pywal (theme colors)
 
 Pywal is not in the default Ubuntu repos. Install it via **pipx** and ensure PATH is set.

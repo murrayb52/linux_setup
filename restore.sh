@@ -86,6 +86,8 @@ if [ -d "$DOTFILES_DIR/.config/polybar" ]; then
     create_symlink "$DOTFILES_DIR/.config/polybar" "$HOME/.config/polybar"
     
     # Make polybar scripts executable
+    # FIX: Polybar won't start if launch.sh doesn't have execute permissions
+    # See: notes/issue-polybar-not-showing.md
     find "$DOTFILES_DIR/.config/polybar" -type f -name "*.sh" -exec chmod +x {} \;
     print_status "Made polybar scripts executable"
 fi
@@ -108,6 +110,7 @@ if [ -d "$DOTFILES_DIR/.bin" ]; then
     create_symlink "$DOTFILES_DIR/.bin" "$HOME/.bin"
     
     # Make all scripts executable
+    # FIX: Scripts need execute permissions to run from i3/polybar
     find "$DOTFILES_DIR/.bin" -type f -name "*.sh" -exec chmod +x {} \;
     print_status "Made custom scripts executable"
 fi
@@ -145,7 +148,7 @@ echo "1. Install required packages from packages.txt:"
 echo "   ${BLUE}sudo apt install \$(cat $SCRIPT_DIR/packages.txt)${NC}"
 echo ""
 echo "2. Set your preferred polybar theme:"
-echo "   ${BLUE}export POLYBAR_OPTION=\"Option4-Green\"${NC}  # or Option1, Option2, Option3 - Nordic"
+echo "   ${BLUE}export POLYBAR_OPTION=\"Option4-Green\"${NC}  # or Option1, Option2, Option3-Nordic"
 echo "   Add to ~/.bashrc or ~/.zshrc to make it permanent"
 echo ""
 echo "3. Reload i3 configuration:"
@@ -153,5 +156,11 @@ echo "   ${BLUE}\$mod+Shift+r${NC}  (default: Super+Shift+r)"
 echo ""
 echo "4. Check setup notes:"
 echo "   ${BLUE}cat $SCRIPT_DIR/notes/setup_notes.md${NC}"
+echo ""
+echo -e "${YELLOW}Troubleshooting:${NC}"
+echo "If you encounter issues, check these notes:"
+echo "  • Taskbar not visible: $SCRIPT_DIR/notes/issue-i3-taskbar-not-visible.md"
+echo "  • Polybar not showing: $SCRIPT_DIR/notes/issue-polybar-not-showing.md"
+echo "  • IPv4 not displaying: $SCRIPT_DIR/notes/issue-ipv4-polybar-module.md"
 echo ""
 echo -e "${GREEN}Enjoy your setup!${NC}"

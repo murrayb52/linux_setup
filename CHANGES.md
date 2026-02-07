@@ -2,12 +2,12 @@
 
 ## Changes Made
 
-### 1. ✅ Fixed Syntax Error
+### 1. Fixed Syntax Error
 - **File**: `dotfiles/.config/polybar/Option4-Green/config`
 - **Issue**: Missing `=` in line 212
 - **Fixed**: `label-padding = ${vars.spacing}`
 
-### 2. ✅ Replaced Spotify with Tidal
+### 2. Replaced Spotify with Tidal
 All references to Spotify have been replaced with Tidal (tidal-hifi) throughout the configuration:
 
 #### i3 Config Changes:
@@ -34,7 +34,7 @@ All references to Spotify have been replaced with Tidal (tidal-hifi) throughout 
 - **Option4-Green/tidal.sh**: Updated playerctl to use `tidal-hifi`
 - **Option4-Green/playpause.sh**: Updated to use `tidal-hifi`
 
-### 3. ✅ Created Main Polybar Launch Script
+### 3. Created Main Polybar Launch Script
 - **File**: `dotfiles/.config/polybar/launch.sh`
 - **Features**:
   - Supports theme switching via `POLYBAR_OPTION` environment variable
@@ -42,7 +42,7 @@ All references to Spotify have been replaced with Tidal (tidal-hifi) throughout 
   - Handles different bar configurations per theme
   - Default theme: Option4-Green
 
-### 4. ✅ Created Restore Script
+### 4. Created Restore Script
 - **File**: `restore.sh`
 - **Features**:
   - Safely backs up existing configurations
@@ -51,7 +51,7 @@ All references to Spotify have been replaced with Tidal (tidal-hifi) throughout 
   - Makes scripts executable
   - Provides clear next-steps instructions
 
-### 5. ✅ Created Documentation
+### 5. Created Documentation
 
 #### Main README
 - **File**: `README.md`
@@ -158,3 +158,63 @@ Since Tidal is not yet installed, you'll need to:
 ---
 
 All configurations are now clean, documented, and ready for use! 🎉
+
+---
+
+## Recent Updates (February 2026)
+
+### 6. Fixed Polybar Not Showing Issue
+- **Issue**: Polybar was not appearing on i3 startup
+- **Root Causes**:
+  1. Scripts lacked execute permissions
+  2. Missing POLYBAR_OPTION environment variable
+- **Solution**:
+  - Updated `restore.sh` to automatically set execute permissions
+  - Added instructions for setting theme environment variable
+  - Created detailed troubleshooting notes
+- **Documentation**: See `notes/issue-polybar-not-showing.md`
+
+### 7. Fixed IPv4 Display in Polybar
+- **Issue**: IPv4 address not displaying correctly, showing IPv6 or multiple IPs
+- **Root Cause**: Original script used `hostname -I` which returns all addresses
+- **Solution**: 
+  - Updated script to use `ip -4 route get 8.8.8.8` method
+  - Ensures only IPv4 from the default route interface is displayed
+  - Handles "No Connection" state gracefully
+- **Script**: `dotfiles/.config/polybar/scripts/ipv4.sh`
+- **Documentation**: See `notes/issue-ipv4-polybar-module.md`
+
+### 8. Simplified Workspace Names
+- **Change**: Removed labels and icons from workspace names
+- **Before**: `"1: Firefox "`, `"2: Terminal >_"`, etc.
+- **After**: `"1"`, `"2"`, etc.
+- **Rationale**: 
+  - Cleaner, more minimalist appearance
+  - No icon font dependencies
+  - More flexible workspace usage
+- **Documentation**: See `notes/changelog-workspace-names.md`
+
+### 9. Created Comprehensive Troubleshooting Documentation
+- **New Notes**:
+  - `notes/issue-i3-taskbar-not-visible.md` - Main taskbar troubleshooting
+  - `notes/issue-polybar-not-showing.md` - Polybar configuration details
+  - `notes/issue-ipv4-polybar-module.md` - IPv4 script technical details
+  - `notes/changelog-workspace-names.md` - Workspace naming changes
+- **Features**:
+  - Obsidian-style wiki links between notes
+  - Detailed explanations of root causes
+  - Step-by-step solutions
+  - Prevention measures
+  - Code examples
+- **Integration**: Main `setup_notes.md` now references all issue notes
+
+### 10. Enhanced Restore Script
+- **Improvements**:
+  - Added troubleshooting section to output
+  - Direct links to issue documentation
+  - Improved comments explaining fixes
+  - Typo fixes (Option3-Nordic)
+- **Better User Experience**:
+  - Clear next steps after installation
+  - Helpful pointers to documentation
+  - Known issues and solutions displayed
