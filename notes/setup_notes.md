@@ -68,6 +68,43 @@ ln -s ~/projects/linux-setup/linux-setup/notes \
 ```
 ## Common Issues & Fixes
 
+### Pywal (theme colors)
+
+Pywal is not in the default Ubuntu repos. Install it via **pipx** and ensure PATH is set.
+
+```bash
+sudo apt install pipx
+pipx install pywal
+pipx ensurepath
+```
+
+Open a new terminal (or re-login), then generate colors:
+
+```bash
+wal -i ~/Pictures/Wallpapers/GreenLeaves4.jpg
+```
+
+If `wal` isn't found, ensure this exists in `~/.zshrc`:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+### Powerlevel10k theme not found
+
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+  ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+### apt update fails (broken PPA)
+
+If `apt update` fails with a missing Release file (e.g. `gezakovacs` PPA), remove it:
+
+```bash
+sudo add-apt-repository -r ppa:gezakovacs/ppa
+```
+
 ### Dotfiles
 - Restore `.config/i3/config`
 

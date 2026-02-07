@@ -57,10 +57,10 @@ width = 100%
 height = 30px
 ;font-0 applies to icons including media buttons
 font-0 = "FontAwesome:size=12;4"
-;font-1 applies to workspaces labelling and Spotify text
+;font-1 applies to workspaces labelling and Tidal text
 font-1 = "NotoMono-Regular:size=10;4"
 ;font-1 = "FontAwesome5Free:style=Regular:size=10;4"
-;font-2 applies is used for the Spotify output text
+;font-2 applies is used for the Tidal output text
 font-2 = "NotoMono-Regular:size=10;4"
 modules-left = rofi separator files firefox term separator playerctl-prev playerctl-play playerctl-next playerctl left-sep-5
 ;modules-left = rofi separator files firefox term mail discord separator separator playerctl-prev playerctl-play playerctl-next playerctl

@@ -30,7 +30,7 @@ module-margin-right = 0
 
 ;modules position
 modules-left = i3
-modules-center = spotify-prev spotify-play-pause spotify-next spotify
+modules-center = tidal-prev tidal-play-pause tidal-next tidal
 modules-right = pulseaudio battery clock menu
 
 ;tray-position will show a simple wifi menu and aplications running in the bg such as discord.
@@ -90,13 +90,13 @@ label-separator-foreground = #ffb52a
 label-separator-background = #2f343f
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; spotify modules and script
+;; Tidal modules and script
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-[module/spotify]
+[module/tidal]
 type = custom/script
 
-;my own spotify song visualizer script (simple)
-exec = ~/.config/polybar/spotify.sh
+;my own Tidal song visualizer script (simple)
+exec = ~/.config/polybar/tidal.sh
 interval = 5
 maxlen = 40
 ellipsis = true
@@ -106,29 +106,29 @@ format-padding = 1
 format-foreground = #ffbec5cb
 format-background = #141b22
 
-[module/spotify-prev]
+[module/tidal-prev]
 type = custom/script
-exec = echo "    "
+exec = echo "    "
 format = <label>
-click-left = playerctl previous spotify
+click-left = playerctl previous tidal-hifi
 format-foreground = #ff141b22
 format-background = #bec5cb
 
-[module/spotify-play-pause]
+[module/tidal-play-pause]
 type = custom/ipc
-hook-0 = echo "    "
-hook-1 = echo "      "
+hook-0 = echo "    "
+hook-1 = echo "      "
 initial = 1
 click-left = i3wm-wsfocus-10
-;click-left = playerctl play-pause spotify
+;click-left = playerctl play-pause tidal-hifi
 format-foreground = #ff141b22
 format-background = #90a3ac
 
-[module/spotify-next]
+[module/tidal-next]
 type = custom/script
-exec = echo "    "
+exec = echo "    "
 format = <label>
-click-left = playerctl next spotify
+click-left = playerctl next tidal-hifi
 format-foreground = #ff141b22
 format-background = #bec5cb
 

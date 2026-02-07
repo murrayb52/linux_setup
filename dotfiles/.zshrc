@@ -7,6 +7,10 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Set Polybar theme (Option1, Option2, Option3 - Nordic, Option4-Green)
+export POLYBAR_OPTION="Option4-Green"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -113,13 +117,16 @@ source $ZSH/oh-my-zsh.sh
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
 # Not supported in the "fish" shell.
-(cat ~/.cache/wal/sequences &)
-
-# Alternative (blocks terminal for 0-3ms)
-cat ~/.cache/wal/sequences
+if [[ -f ~/.cache/wal/sequences ]]; then
+  (cat ~/.cache/wal/sequences &)
+  # Alternative (blocks terminal for 0-3ms)
+  cat ~/.cache/wal/sequences
+fi
 
 # To add support for TTYs this line can be optionally added.
-source ~/.cache/wal/colors-tty.sh
+if [[ -f ~/.cache/wal/colors-tty.sh ]]; then
+  source ~/.cache/wal/colors-tty.sh
+fi
 
 # This function prevents wal from changing the background and only changes the colour scheme based on a particular image
 #wal -n -i ~/Pictures/Wallpapers/NordMountain1.png

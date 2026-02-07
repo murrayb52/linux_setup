@@ -1,6 +1,6 @@
 ; Author: Murray Buchanan
-; Inspired by: https://github.com/marbinuwusito/dontfiles)
-		https://www.reddit.com/r/unixporn/comments/ldicxq/i3gaps_owo/
+; Inspired by: https://github.com/marbinuwusito/dontfiles
+;              https://www.reddit.com/r/unixporn/comments/ldicxq/i3gaps_owo/
 
 [color]
 highlight  = #aa102010
@@ -41,9 +41,9 @@ font-0 = "FontAwesome:size=12;6"
 font-1 = Hack-Regular:size=10.5;6
 ;font-0 applies to the all icons
 ;font-1 applies to all bar text
-modules-left = time
-modules-center = i3
-modules-right = playerctl playerctl-prev playerctl-playpause playerctl-next
+modules-left = i3
+modules-center = 
+modules-right = 
 tray-position = right
 tray-underline = ${color.c4}
 line-size = 1.5
@@ -57,7 +57,7 @@ width = 100%
 height = 45px
 ;font-0 applies to icons including media buttons
 font-0 = "FontAwesome:size=12;-3"
-;font-1 applies to workspaces labelling and Spotify text
+;font-1 applies to workspaces labelling and Tidal text
 font-1 = "Hack-Regular:size=10.5;-3"
 ;font-2 applies to the Volume slider
 font-2 = "FontAwesome:size=2;-5"
@@ -78,8 +78,26 @@ padding-right = 5
 module-margin-left = 1
 module-margin-right = 1
 
+[bar/external]
+monitor = ${env:MONITOR:}
+bottom = false
+background = ${color.background}
+foreground = ${color.text}
+width = 100%
+height = 40px
+font-0 = "FontAwesome:size=11;4"
+font-1 = "Hack-Regular:size=10;4"
+modules-left = i3
+padding-left = 3
+padding-right = 3
+border-left-size = 5
+border-right-size = 5
+border-top-size = 5
+radius = 5
+
 [module/i3]
 type = internal/i3
+pin-workspaces = true
 index-sort = true
 ;strip-wsnumbers = true
 enable-scroll = true
@@ -201,7 +219,7 @@ type = internal/cpu
 interval = 1
 format = <label>
 label =   %percentage%%
-label-padding${vars.spacing}
+label-padding = ${vars.spacing}
 
 
 [module/temp]
@@ -260,8 +278,8 @@ label-disconnected-padding = ${vars.spacing}
 
 [module/ipv4]
 type = custom/script
-exec = ~/.config/polybar/pub-ipv4.sh
-interval = 10
+exec = curl -s https://ipinfo.io/ip 2>/dev/null
+interval = 30
 label =   %output%
 tail = true
 label-padding = ${vars.spacing}
@@ -331,9 +349,9 @@ bar-volume-empty-foreground = ${color.text}
 
 [module/playerctl]
 type = custom/script
-exec = $HOME/.config/polybar/spotify.sh
+exec = $HOME/.config/polybar/tidal.sh
 interval = 1
-click-left = i3wm-wsfocus-10: Spotify  
+click-left = i3wm-wsfocus-10: Tidal
 format = <label>
 label = %output%
 format-padding = ${vars.spacing}
@@ -342,14 +360,14 @@ format-padding = ${vars.spacing}
 [module/playerctl-next]
 type = custom/text
 content = 
-click-left = playerctl -p spotify next &
+click-left = playerctl -p tidal-hifi next &
 content-padding = 2
 
 
 [module/playerctl-prev]
 type = custom/text
 content =  
-click-left = playerctl -p spotify previous &
+click-left = playerctl -p tidal-hifi previous &
 content-padding = 2
 
 
@@ -357,8 +375,8 @@ content-padding = 2
 type = custom/script
 exec = ~/.config/polybar/playpause.sh
 interval = 1
-click-left = playerctl -p spotify play-pause &
-click-middle = spotify &
+click-left = playerctl -p tidal-hifi play-pause &
+click-middle = tidal-hifi &
 format = <label>
 label = %output%
 format-padding = ${vars.spacing}

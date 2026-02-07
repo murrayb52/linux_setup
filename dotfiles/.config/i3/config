@@ -28,6 +28,9 @@ font pango:Hack, FontAwesome 10
 
 # Prevent sleep/hibernation
 exec_always --no-startup-id ~/.bin/scripts/screen_settings.sh
+# Set GTK theme to dark mode
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 # Launch Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
@@ -113,7 +116,7 @@ bindsym $mod+a focus parent
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: Firefox "
 set $ws2 "2: Terminal >_"
-set $ws3 "3: PyCharm "
+set $ws3 "3: Code "
 set $ws4 "4: Files "
 set $ws5 "5: "
 set $ws6 "6: "
@@ -149,8 +152,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # force applications to open in specific workspace
 assign [class="Firefox"] $ws1
 assign [class="Thunar"] $ws4
-for_window [class="Spotify"] move to workspace $ws10
-assign [class="jetbrains-pycharm-ce"] $ws3
+for_window [class="Tidal"] move to workspace $ws10
+assign [class="code"] $ws3
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -211,20 +214,20 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioPause exec playerctl play-pause
-bindsym --whole-window button9 exec playerctl -p spotify play-pause
-bindsym --whole-window button8 exec playerctl --ignore-player=spotify play-pause
-bindcode $mod+105 exec playerctl --ignore-player=spotify play-pause
+bindsym --whole-window button9 exec playerctl -p tidal-hifi play-pause
+bindsym --whole-window button8 exec playerctl --ignore-player=tidal-hifi play-pause
+bindcode $mod+105 exec playerctl --ignore-player=tidal-hifi play-pause
 
 # Automatic loading with i3 startup
 # Use 'exec' to load on machine startup
 # Use 'exec_always' to load for every i3 restart
 # Load wallpaper
-exec_always feh --bg-scale ~/Pictures/Wallpapers/GreenLeaves4.jpg
+exec_always feh --bg-scale ~/Pictures/Wallpapers/GreenLeaves2.jpg
 # Open Firefox
-exec firefox
-exec spotify
-# compton allows opacity with rofi search
-exec compton -f
+#exec firefox
+#exec tidal-hifi
+# picom compositor for transparency and smooth rendering
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 
 ####################################
 # i3-gaps
