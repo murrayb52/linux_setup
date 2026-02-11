@@ -9,8 +9,8 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-# Set Polybar theme (Option1, Option2, Option3 - Nordic, Option4-Green)
-export POLYBAR_OPTION="Option4-Green"
+# Set Polybar theme (Option1, Option2, Option3, Option4, Option5)
+export POLYBAR_OPTION="Option5"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -130,6 +130,9 @@ fi
 
 # This function prevents wal from changing the background and only changes the colour scheme based on a particular image
 #wal -n -i ~/Pictures/Wallpapers/NordMountain1.png
+
+# Custom LS_COLORS - directories in green
+export LS_COLORS='di=0;32:ln=0;36:so=0;35:pi=0;33:ex=0;31:bd=0;34:cd=0;34:su=0;41:sg=0;46:tw=0;42:ow=0;43'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

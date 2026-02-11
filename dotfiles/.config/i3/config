@@ -206,8 +206,8 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 # Custom commands made by user
 bindsym $mod+shift+Escape exec ~/.bin/scripts/lockgraphic.sh
 bindsym $mod+n workspace $ws4; exec nautilus
-bindsym $mod+c exec speedcrunch
-bindsym $mod+p workspace $ws3 exec /opt/pycharm-*/bin/pycharm.sh
+bindsym $mod+c exec code
+bindsym $mod+Shift+p exec flameshot gui
 
 # Media player controls
 bindsym XF86AudioNext exec playerctl next

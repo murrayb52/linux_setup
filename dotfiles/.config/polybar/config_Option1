@@ -4,7 +4,7 @@
 
 ;;;;;; Godkayaki ;;;;;;
 
-[bar/Bar]
+[bar/main]
 enable-ipc = true
 bottom = false
 ;dock = false
@@ -30,7 +30,8 @@ module-margin-right = 0
 
 ;modules position
 modules-left = i3
-modules-center = tidal-prev tidal-play-pause tidal-next tidal
+;modules-center = tidal-prev tidal-play-pause tidal-next tidal
+modules-center = 
 modules-right = pulseaudio battery clock menu
 
 ;tray-position will show a simple wifi menu and aplications running in the bg such as discord.
@@ -90,47 +91,47 @@ label-separator-foreground = #ffb52a
 label-separator-background = #2f343f
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Tidal modules and script
+;; Tidal modules and script (DISABLED)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-[module/tidal]
-type = custom/script
-
-;my own Tidal song visualizer script (simple)
-exec = ~/.config/polybar/tidal.sh
-interval = 5
-maxlen = 40
-ellipsis = true
-scroll-up = xdotool key super+0
-scroll-down = xdotool key super+z
-format-padding = 1
-format-foreground = #ffbec5cb
-format-background = #141b22
-
-[module/tidal-prev]
-type = custom/script
-exec = echo "    "
-format = <label>
-click-left = playerctl previous tidal-hifi
-format-foreground = #ff141b22
-format-background = #bec5cb
-
-[module/tidal-play-pause]
-type = custom/ipc
-hook-0 = echo "    "
-hook-1 = echo "      "
-initial = 1
-click-left = i3wm-wsfocus-10
-;click-left = playerctl play-pause tidal-hifi
-format-foreground = #ff141b22
-format-background = #90a3ac
-
-[module/tidal-next]
-type = custom/script
-exec = echo "    "
-format = <label>
-click-left = playerctl next tidal-hifi
-format-foreground = #ff141b22
-format-background = #bec5cb
+;[module/tidal]
+;type = custom/script
+;
+;;my own Tidal song visualizer script (simple)
+;exec = ~/.config/polybar/tidal.sh
+;interval = 5
+;maxlen = 40
+;ellipsis = true
+;scroll-up = xdotool key super+0
+;scroll-down = xdotool key super+z
+;format-padding = 1
+;format-foreground = #ffbec5cb
+;format-background = #141b22
+;
+;[module/tidal-prev]
+;type = custom/script
+;exec = echo "    "
+;format = <label>
+;click-left = playerctl previous tidal-hifi
+;format-foreground = #ff141b22
+;format-background = #bec5cb
+;
+;[module/tidal-play-pause]
+;type = custom/ipc
+;hook-0 = echo "    "
+;hook-1 = echo "      "
+;initial = 1
+;click-left = i3wm-wsfocus-10
+;;click-left = playerctl play-pause tidal-hifi
+;format-foreground = #ff141b22
+;format-background = #90a3ac
+;
+;[module/tidal-next]
+;type = custom/script
+;exec = echo "    "
+;format = <label>
+;click-left = playerctl next tidal-hifi
+;format-foreground = #ff141b22
+;format-background = #bec5cb
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Window title (Xtitle)
@@ -177,8 +178,8 @@ ramp-volume-3-background = #90a3ac
 [module/clock]
 type = internal/date
 
-;format -weekday-, -day number- -month- ━ -hour-:-minute-
-date = %a, %d %b ━ %H:%M
+;format -weekday-, -day number- -month- - -hour-:-minute-
+date = %a, %d %b - %H:%M
 interval = 5
 format-padding = 1
 format-foreground = #ff1d2027

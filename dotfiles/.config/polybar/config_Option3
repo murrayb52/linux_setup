@@ -62,7 +62,8 @@ font-1 = "NotoMono-Regular:size=10;4"
 ;font-1 = "FontAwesome5Free:style=Regular:size=10;4"
 ;font-2 applies is used for the Tidal output text
 font-2 = "NotoMono-Regular:size=10;4"
-modules-left = rofi separator files firefox term separator playerctl-prev playerctl-play playerctl-next playerctl left-sep-5
+;modules-left = rofi separator files firefox term separator playerctl-prev playerctl-play playerctl-next playerctl left-sep-5
+modules-left = rofi separator files firefox term separator left-sep-5
 ;modules-left = rofi separator files firefox term mail discord separator separator playerctl-prev playerctl-play playerctl-next playerctl
 modules-center = i3
 modules-right = pulseaudio battery redshift notification separator power
@@ -194,7 +195,7 @@ type = internal/cpu
 interval = 1
 format = <label>
 label =  %percentage%%
-label-padding${vars.spacing}
+label-padding = ${vars.spacing}
 label-underline = ${color.c7}
 
 

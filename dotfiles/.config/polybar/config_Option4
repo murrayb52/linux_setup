@@ -43,9 +43,9 @@ font-1 = Hack-Regular:size=10.5;6
 ;font-1 applies to all bar text
 modules-left = i3
 modules-center = 
-modules-right = 
-tray-position = right
-tray-underline = ${color.c4}
+modules-right = wifi-module bluetooth-module
+;tray-position = right
+;tray-underline = ${color.c4}
 line-size = 1.5
 
 
@@ -224,7 +224,7 @@ label-padding = ${vars.spacing}
 
 [module/temp]
 type = internal/temperature
-hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
+;hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input
 interval = 1
 thermal-zone = 0
 units = true
@@ -252,29 +252,29 @@ label = 12 %output% updates
 label-padding = ${vars.spacing}
 
 
-[module/wifi]
-type = internal/network
-interface = wlp2s0
-interval = 3
-format-connected = <label-connected>
-label-connected =  %essid%
-label-connected-padding = ${vars.spacing}
-format-disconnected = <label-disconnected>
-label-disconnected =  disconnected
-label-disconnected-padding = ${vars.spacing}
+;[module/wifi]
+;type = internal/network
+;interface = wlp2s0
+;interval = 3
+;format-connected = <label-connected>
+;label-connected =  %essid%
+;label-connected-padding = ${vars.spacing}
+;format-disconnected = <label-disconnected>
+;label-disconnected =  disconnected
+;label-disconnected-padding = ${vars.spacing}
+;
 
-
-[module/local-ip]
-type = internal/network
-interface = wlp2s0
-interval = 3
-format-connected = <label-connected>
-label-connected =   %local_ip%
-label-connected-padding = ${vars.spacing}
-format-disconnected = <label-disconnected>
-label-disconnected = 
-label-disconnected-padding = ${vars.spacing}
-
+;[module/local-ip]
+;type = internal/network
+;interface = wlp2s0
+;interval = 3
+;format-connected = <label-connected>
+;label-connected =   %local_ip%
+;label-connected-padding = ${vars.spacing}
+;format-disconnected = <label-disconnected>
+;label-disconnected = 
+;label-disconnected-padding = ${vars.spacing}
+;
 
 [module/ipv4]
 type = custom/script
@@ -347,40 +347,40 @@ bar-volume-empty-font = 3
 bar-volume-empty-foreground = ${color.text}
 
 
-[module/playerctl]
-type = custom/script
-exec = $HOME/.config/polybar/tidal.sh
-interval = 1
-click-left = i3wm-wsfocus-10: Tidal
-format = <label>
-label = %output%
-format-padding = ${vars.spacing}
+;[module/playerctl]
+;type = custom/script
+;exec = $HOME/.config/polybar/tidal.sh
+;interval = 1
+;click-left = i3wm-wsfocus-10: Tidal
+;format = <label>
+;label = %output%
+;format-padding = ${vars.spacing}
+;
 
+;[module/playerctl-next]
+;type = custom/text
+;content = 
+;click-left = playerctl -p tidal-hifi next &
+;content-padding = 2
+;
 
-[module/playerctl-next]
-type = custom/text
-content = 
-click-left = playerctl -p tidal-hifi next &
-content-padding = 2
+;[module/playerctl-prev]
+;type = custom/text
+;content =  
+;click-left = playerctl -p tidal-hifi previous &
+;content-padding = 2
+;
 
-
-[module/playerctl-prev]
-type = custom/text
-content =  
-click-left = playerctl -p tidal-hifi previous &
-content-padding = 2
-
-
-[module/playerctl-playpause]
-type = custom/script
-exec = ~/.config/polybar/playpause.sh
-interval = 1
-click-left = playerctl -p tidal-hifi play-pause &
-click-middle = tidal-hifi &
-format = <label>
-label = %output%
-format-padding = ${vars.spacing}
-
+;[module/playerctl-playpause]
+;type = custom/script
+;exec = ~/.config/polybar/playpause.sh
+;interval = 1
+;click-left = playerctl -p tidal-hifi play-pause &
+;click-middle = tidal-hifi &
+;format = <label>
+;label = %output%
+;format-padding = ${vars.spacing}
+;
 
 [module/rofi]
 type = custom/text
@@ -419,5 +419,23 @@ content-padding = ${vars.spacing}
 
 [module/separator]
 type = custom/text
-content = " "
+format = " "
 content-padding= 1.5
+
+
+[module/wifi-module]
+type = custom/script
+exec = ~/.config/polybar/wifi-status.sh
+interval = 5
+click-left = ~/.config/polybar/wifi-menu.sh &
+format-padding = 2
+format-foreground = ${color.text}
+
+
+[module/bluetooth-module]
+type = custom/script
+exec = ~/.config/polybar/bluetooth-status.sh
+interval = 5
+click-left = ~/.config/polybar/bluetooth-menu.sh &
+format-padding = 2
+format-foreground = ${color.text}

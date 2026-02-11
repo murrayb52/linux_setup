@@ -11,7 +11,7 @@ configuration {
     alternate-normal-foreground: @foreground;
     selected-normal-foreground:  @background;
 
-    background:                  #CED2DF;
+    background:                  rgba ( 206, 210, 223, 80 % );
     normal-background:           @background;
     alternate-normal-background: @background;
     background-color:            @background;

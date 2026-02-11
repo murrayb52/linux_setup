@@ -1,6 +1,14 @@
 # Polybar Theme Options Guide
 
-This directory contains 4 different polybar themes. Each has its own unique style and module layout.
+This directory contains 4 different polybar themes, all consolidated in a single directory structure.
+
+## Directory Structure
+
+All config files and scripts are now in the main polybar directory:
+- `config_Option1`, `config_Option2`, `config_Option3`, `config_Option4` - Theme configurations
+- `launch.sh` - Main launch script supporting all themes
+- `switch-theme.sh` - Interactive theme switcher
+- `*.sh` - Consolidated helper scripts used by various themes
 
 ## Available Themes
 
@@ -16,13 +24,13 @@ This directory contains 4 different polybar themes. Each has its own unique styl
 - **Bars**: Single top bar
 - **Color Scheme**: Minimal dark theme
 
-### Option3 - Nordic
+### Option3
 - **Style**: Nordic-inspired design
 - **Modules**: Full system monitoring
 - **Bars**: Dual bars (top and bottom)
 - **Color Scheme**: Nordic palette (blues and grays)
 
-### Option4-Green (Default)
+### Option4 (Default)
 - **Style**: Comprehensive dual-bar layout
 - **Modules**: Complete system monitoring, Tidal integration, power menu
 - **Bars**: Top (time, workspaces, media) and Bottom (system stats, volume, power)
@@ -31,42 +39,34 @@ This directory contains 4 different polybar themes. Each has its own unique styl
 
 ## Switching Themes
 
-### Method 1: Environment Variable (Recommended)
+### Method 1: Interactive Switcher (Easiest)
+```bash
+~/.config/polybar/switch-theme.sh
+```
+
+### Method 2: Environment Variable (Recommended for Permanent)
 ```bash
 # Temporary (current session only)
-export POLYBAR_OPTION="Option3 - Nordic"
+export POLYBAR_OPTION="Option3"
 
 # Permanent (add to ~/.bashrc or ~/.zshrc)
-echo 'export POLYBAR_OPTION="Option4-Green"' >> ~/.bashrc
+echo 'export POLYBAR_OPTION="Option5"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Method 2: Edit launch.sh
+### Method 3: Edit launch.sh
 Edit line 13 in `launch.sh`:
 ```bash
-POLYBAR_OPTION="${POLYBAR_OPTION:-Option4-Green}"
+POLYBAR_OPTION="${POLYBAR_OPTION:-Option5}"
 ```
 
-### Method 3: Direct Launch
-```bash
-# From the specific option directory
-cd ~/.config/polybar/Option4-Green
-./launch.sh
-```
+## Consolidated Scripts
 
-## Theme-Specific Scripts
+All helper scripts are now in the main polybar directory:
 
-### Option1
-- `tidal.sh` - Display current Tidal track
-
-### Option3 - Nordic
-- `pub-ipv4.sh` - Show public IPv4 address
-- `player-mpris-simple.sh` - Media player integration
-
-### Option4-Green
-- `tidal.sh` - Display current Tidal track with artist
-- `playpause.sh` - Dynamic play/pause icon
-- `pub-ipv4.sh` - Show public IPv4 address
+- `playpause.sh` - Dynamic play/pause icon (used by Option4)
+- `pub-ipv4.sh` - Show public IPv4 address (used by Option3, Option4)
+- `player-mpris-simple.sh` - Media player integration (used by Option3)
 
 ## Module Overview
 
@@ -74,7 +74,7 @@ cd ~/.config/polybar/Option4-Green
 - **i3**: Workspace indicators
 - **time/date**: Clock display
 
-### Option4-Green Specific
+### Option4 Specific
 - **Top Bar**: Time, workspaces, Tidal player
 - **Bottom Bar**: CPU, memory, temperature, disk, network, volume, redshift, power menu
 
@@ -82,14 +82,14 @@ cd ~/.config/polybar/Option4-Green
 
 To customize a theme:
 
-1. Navigate to the theme directory:
+1. Navigate to the polybar directory:
    ```bash
-   cd ~/.config/polybar/Option4-Green
+   cd ~/.config/polybar
    ```
 
-2. Edit the config file:
+2. Edit the desired config file:
    ```bash
-   nano config
+   nano config_Option4
    ```
 
 3. Reload polybar:
@@ -106,25 +106,25 @@ To customize a theme:
 
 ### Modules not displaying
 - Verify required dependencies are installed (see packages.txt)
-- Check script permissions in the theme directory
-- Ensure scripts are executable: `chmod +x ~/.config/polybar/Option*/*.sh`
+- Check script permissions: `chmod +x ~/.config/polybar/*.sh`
+- Ensure scripts are executable in the main polybar directory
 
 ### Theme not switching
 - Verify POLYBAR_OPTION is set: `echo $POLYBAR_OPTION`
-- Check that the theme directory exists
+- Check that config_OptionX file exists
 - Reload i3 after changing the variable
 
 ## Creating Your Own Theme
 
-1. Copy an existing theme:
+1. Copy an existing config:
    ```bash
    cd ~/.config/polybar
-   cp -r Option4-Green MyCustomTheme
+   cp config_Option4 config_MyCustomTheme
    ```
 
 2. Edit the config file:
    ```bash
-   nano MyCustomTheme/config
+   nano config_MyCustomTheme
    ```
 
 3. Set it as active:
@@ -149,6 +149,6 @@ Additional for system modules:
 
 ---
 
-**Current Default**: Option4-Green  
-**Recommended for beginners**: Option4-Green (most features)  
+**Current Default**: Option4  
+**Recommended for beginners**: Option4 (most features)  
 **Recommended for minimal setup**: Option2

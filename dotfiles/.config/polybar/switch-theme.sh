@@ -2,10 +2,11 @@
 # Polybar theme switcher
 # Quick helper to switch between polybar themes
 
-POLYBAR_DIR="$HOME/.config/polybar"
+# Get the directory where this script is located
+POLYBAR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Available themes
-THEMES=("Option1" "Option2" "Option3 - Nordic" "Option4-Green")
+THEMES=("Option1" "Option2" "Option3" "Option4" "Option5")
 
 echo "=========================================="
 echo "  Polybar Theme Switcher"
@@ -18,7 +19,7 @@ done
 echo ""
 
 # Get current theme
-CURRENT="${POLYBAR_OPTION:-Option4-Green}"
+CURRENT="${POLYBAR_OPTION:-Option5}"
 echo "Current theme: $CURRENT"
 echo ""
 
