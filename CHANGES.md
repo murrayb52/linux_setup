@@ -218,3 +218,33 @@ All configurations are now clean, documented, and ready for use! 🎉
   - Clear next steps after installation
   - Helpful pointers to documentation
   - Known issues and solutions displayed
+
+## 2026-02-13 - Clipboard Manager Integration
+
+### Added
+- **Clipboard Manager** (Clipster + Rofi)
+  - Windows 11-style clipboard history manager
+  - Menu appears directly below cursor (polybar WiFi/BT style)
+  - Auto-paste selected items
+  - Last 20 clipboard items with fuzzy search
+
+### New Files
+- `dotfiles/.config/rofi/clipboard.sh` - Clipboard menu script
+- `notes/clipboard-manager-setup.md` - Complete setup documentation
+
+### Modified
+- `dotfiles/.config/i3/config`:
+  - Changed `$mod+v` from "split vertical" to "open clipboard"
+  - Added `$mod+Shift+v` for "split vertical"
+  - Added clipster daemon autostart
+
+### Dependencies
+- rofi (already required)
+- xdotool (NEW - for cursor positioning)
+- xclip (NEW - for clipboard operations)
+- clipster (installed via GitHub)
+
+### Key Bindings
+- `$mod+v` - Open clipboard menu at cursor
+- `$mod+Shift+v` - Split vertical (moved from $mod+v)
+
