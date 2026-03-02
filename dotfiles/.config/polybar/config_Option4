@@ -254,7 +254,7 @@ label-padding = ${vars.spacing}
 
 ;[module/wifi]
 ;type = internal/network
-;interface = wlp2s0
+;interface = wlp1s0
 ;interval = 3
 ;format-connected = <label-connected>
 ;label-connected =  %essid%
@@ -266,7 +266,7 @@ label-padding = ${vars.spacing}
 
 ;[module/local-ip]
 ;type = internal/network
-;interface = wlp2s0
+;interface = wlp1s0
 ;interval = 3
 ;format-connected = <label-connected>
 ;label-connected =   %local_ip%

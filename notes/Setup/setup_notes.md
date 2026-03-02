@@ -1,3 +1,19 @@
+# Clone dotfiles
+
+1. Generate ssh key
+```shell
+sudo apt install openssh-server
+ssh-keygen
+```
+2. Copy SSH key and [auth on GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account): 
+```shell
+$ cat ~/.ssh/id_ed25519.pub
+```
+3. clone repo with ssh key: git@github.com:murrayb52/linux_setup.git
+```shell
+git clone git@github.com:murrayb52/linux_setup.git
+```
+
 # i3-gaps Setup Notes
 
 These notes are intended to live happily in **Obsidian** and document a full i3-gaps–based Linux desktop setup, including tweaks, fixes, inspiration, and custom key mappings.
@@ -34,6 +50,8 @@ These notes are intended to live happily in **Obsidian** and document a full i3-
 chmod 777 ~/.config -R
 ```
 
+### Favourite Packages
+[TLDR](https://tldr.sh/): quick summaries of man pages
 ### Restore Existing System
 
 - Restore dotfiles from GitHub:  
@@ -64,7 +82,6 @@ Expose repo-backed notes inside the Obsidian vault **without duplicating files**
 ```bash
 ln -s ~/projects/linux-setup/linux-setup/notes \
       ~/ObsidianVault/Linux
-```
 ```
 ## Common Issues & Fixes
 
