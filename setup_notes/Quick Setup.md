@@ -42,7 +42,7 @@ Resolving deltas: 100% (324/324), done.
 
 Success!
 
-## 2. Setup Obsidian Vault
+## 2. (Optional) Setup Obsidian Vault
 
 ### Overview
 An Obsidian Vault is used for recording learnt Linux knowledge that is often needed. The minimal notes needed for installing and configuring a new Linux are tracked in the git repo: https://github.com/murrayb52/linux_setup but are designed to symlink to the Obsidian Vault.

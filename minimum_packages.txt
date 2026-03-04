@@ -1,0 +1,25 @@
+# Minimum packages required for `restore.sh` and the desktop dotfiles
+# Install with: sudo apt update && sudo apt install $(cat minimum_packages.txt)
+#
+# These are the core desktop packages referenced by the dotfiles and
+# helpful utilities the restore script relies on (font cache, find, etc.
+# Most basic utilities (mv, ln, cp, mkdir, chmod, find, date, echo) are
+# provided by the base system and are not repeated here.
+
+i3                      # i3 window manager (use distro package)
+# Use the distribution package `i3`. If you specifically need i3-gaps,
+# install it separately (may require a PPA or building from source).
+
+polybar                 # status bar used by the dotfiles
+rofi                    # application launcher / menu
+picom                   # compositor (aka compton)
+feh                     # wallpaper/background tool
+playerctl               # media player CLI used by status bar scripts
+i3lock                  # screen locker used by some scripts
+i3status                # simple status program for i3 (optional for polybar configs)
+fontconfig              # provides fc-cache to refresh font cache
+fonts-font-awesome      # icon font commonly used by polybar
+
+# Optional (uncomment if you use these features):
+# pulseaudio            # sound server (if not already present)
+# pavucontrol          # GUI mixer for PulseAudio

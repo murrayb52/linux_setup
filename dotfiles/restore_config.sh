@@ -7,6 +7,28 @@ set -e  # Exit on error
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOTFILES_DIR="$SCRIPT_DIR"
 
+# Helper: backup existing file/dir if present
+backup_if_exists() {
+    local target="$1"
+    if [ -e "$target" ]; then
+        local backup_dir="$BACKUP_DIR"
+        mkdir -p "$backup_dir"
+        local base=$(basename "$target")
+        cp -r "$target" "$backup_dir/${base}.backup.$(date +%Y%m%d_%H%M%S)" 2>/dev/null || true
+    fi
+}
+
+# Helper: create symlink with backup of existing target
+create_symlink() {
+    local src="$1"
+    local dst="$2"
+    local dst_dir
+    dst_dir=$(dirname "$dst")
+    mkdir -p "$dst_dir"
+    backup_if_exists "$dst"
+    ln -sfn "$src" "$dst"
+}
+
 echo "=========================================="
 echo "  Dotfiles Configuration Restore"
 echo "=========================================="
@@ -27,8 +49,6 @@ BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
 # Backup existing configs if they exist
-[ -f ~/.zshrc ] && cp ~/.zshrc "$BACKUP_DIR/"
-[ -f ~/.p10k.zsh ] && cp ~/.p10k.zsh "$BACKUP_DIR/"
 [ -d ~/.config/polybar ] && cp -r ~/.config/polybar "$BACKUP_DIR/"
 [ -d ~/.config/i3 ] && cp -r ~/.config/i3 "$BACKUP_DIR/"
 [ -d ~/.config/picom ] && cp -r ~/.config/picom "$BACKUP_DIR/"
@@ -38,79 +58,47 @@ mkdir -p "$BACKUP_DIR"
 echo "✓ Backup created at: $BACKUP_DIR"
 echo ""
 
-# Install ZSH configs
-echo "Installing ZSH configurations..."
-cp "$DOTFILES_DIR/zsh/.zshrc" ~/.zshrc
-cp "$DOTFILES_DIR/zsh/.p10k.zsh" ~/.p10k.zsh
-echo "✓ ZSH configs installed"
-
 # Install .config directories
 echo ""
 echo "Installing .config directories..."
 mkdir -p ~/.config
 
-# Polybar
+# Polybar (create symlink to config directory)
 if [ -d "$DOTFILES_DIR/.config/polybar" ]; then
-    cp -r "$DOTFILES_DIR/.config/polybar" ~/.config/
-    chmod +x ~/.config/polybar/*.sh
-    echo "✓ Polybar config installed"
+    create_symlink "$DOTFILES_DIR/.config/polybar" "$HOME/.config/polybar"
+    find "$HOME/.config/polybar" -type f -name "*.sh" -exec chmod +x {} \; || true
+    echo "✓ Polybar config installed (symlink)"
 fi
 
-# i3
+# i3 (create symlink to config directory)
 if [ -d "$DOTFILES_DIR/.config/i3" ]; then
-    cp -r "$DOTFILES_DIR/.config/i3" ~/.config/
-    echo "✓ i3 config installed"
+    create_symlink "$DOTFILES_DIR/.config/i3" "$HOME/.config/i3"
+    echo "✓ i3 config installed (symlink)"
 fi
 
-# Picom
+# Picom (create symlink to config directory)
 if [ -d "$DOTFILES_DIR/.config/picom" ]; then
-    cp -r "$DOTFILES_DIR/.config/picom" ~/.config/
-    echo "✓ Picom config installed"
+    create_symlink "$DOTFILES_DIR/.config/picom" "$HOME/.config/picom"
+    echo "✓ Picom config installed (symlink)"
 fi
 
-# Rofi
+# Rofi (create symlink to config directory)
 if [ -d "$DOTFILES_DIR/.config/rofi" ]; then
-    cp -r "$DOTFILES_DIR/.config/rofi" ~/.config/
-    chmod +x ~/.config/rofi/*.sh
-    chmod +x ~/.config/rofi/scripts/*.sh
-    echo "✓ Rofi config installed (Kanagawa Dragon theme)"
+    create_symlink "$DOTFILES_DIR/.config/rofi" "$HOME/.config/rofi"
+    find "$HOME/.config/rofi" -type f -name "*.sh" -exec chmod +x {} \; || true
+    find "$HOME/.config/rofi/scripts" -type f -name "*.sh" -exec chmod +x {} \; || true
+    echo "✓ Rofi config installed (symlink)"
 fi
 
-# Install .bin scripts
+# Install .bin scripts (symlinked)
 echo ""
 echo "Installing bin scripts..."
 if [ -d "$DOTFILES_DIR/.bin" ]; then
-    cp -r "$DOTFILES_DIR/.bin" ~/
-    chmod +x ~/.bin/scripts/*.sh
-    echo "✓ Bin scripts installed"
+    create_symlink "$DOTFILES_DIR/.bin" "$HOME/.bin"
+    find "$HOME/.bin" -type f -name "*.sh" -exec chmod +x {} \; || true
+    echo "✓ Bin scripts installed (symlink)"
 fi
 
-# Install fonts
-echo ""
-echo "Installing fonts..."
-if [ -d "$DOTFILES_DIR/fonts" ] && [ -n "$(ls -A $DOTFILES_DIR/fonts/*.ttf 2>/dev/null)" ]; then
-    mkdir -p ~/.local/share/fonts
-    cp "$DOTFILES_DIR/fonts"/*.ttf ~/.local/share/fonts/ 2>/dev/null || true
-    fc-cache -f ~/.local/share/fonts
-    echo "✓ Fonts installed"
-else
-    echo "⚠ No fonts found in fonts directory"
-fi
-
-# Download and install MesloLGS Nerd Font for terminal icons
-echo ""
-echo "Installing MesloLGS Nerd Font..."
-mkdir -p ~/.local/share/fonts
-cd /tmp
-if command -v wget &> /dev/null; then
-    wget -q https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -O ~/.local/share/fonts/MesloLGS_NF_Regular.ttf 2>/dev/null || echo "⚠ Could not download font"
-    wget -q https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -O ~/.local/share/fonts/MesloLGS_NF_Bold.ttf 2>/dev/null || true
-    wget -q https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -O ~/.local/share/fonts/MesloLGS_NF_Italic.ttf 2>/dev/null || true
-    wget -q https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -O ~/.local/share/fonts/MesloLGS_NF_Bold_Italic.ttf 2>/dev/null || true
-    fc-cache -f ~/.local/share/fonts
-    echo "✓ MesloLGS Nerd Font installed"
-fi
-cd "$DOTFILES_DIR"
 
 # Install wallpapers
 echo ""
@@ -121,33 +109,7 @@ if [ -d "$DOTFILES_DIR/Wallpapers" ]; then
     echo "✓ Wallpapers installed"
 fi
 
-# Configure gnome-terminal if available
-echo ""
-if command -v gsettings &> /dev/null && gsettings list-schemas | grep -q "org.gnome.Terminal"; then
-    echo "Configuring gnome-terminal..."
-    
-    PROFILE=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-    
-    # Set colors
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ use-theme-colors false
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ background-color '#282828'
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ foreground-color '#FFFFFF'
-    
-    # Set transparency
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ use-transparent-background true
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ background-transparency-percent 15
-    
-    # Set font
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ use-system-font false
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE/ font 'Monospace 10'
-    
-    # Hide menu bar
-    gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
-    
-    echo "✓ Gnome-terminal configured (dark grey, white text, 85% opacity, no menu bar)"
-else
-    echo "⚠ Gnome-terminal not found, skipping terminal configuration"
-fi
+# (Zsh and terminal customization moved to restore_terminal.sh)
 
 echo ""
 echo "=========================================="
@@ -156,13 +118,9 @@ echo "=========================================="
 echo ""
 echo "Backup location: $BACKUP_DIR"
 echo ""
-echo "Next steps:"
-echo "1. Reload ZSH: source ~/.zshrc"
-echo "2. Restart i3: \$mod+Shift+r"
-echo "3. Open a new terminal to see the changes"
+echo "Restart i3 with: \$mod+Shift+r"
 echo ""
 echo "Notes:"
 echo "- Polybar theme is set to Option5 by default"
 echo "- Use 'switch-theme.sh' to change polybar themes"
-echo "- Terminal has green directory highlighting"
 echo ""
