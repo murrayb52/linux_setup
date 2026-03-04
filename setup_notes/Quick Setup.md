@@ -1,26 +1,140 @@
-# Clone dotfiles
+# Setting up a new Linux enviroment
+
+## 1. Clone repo
 
 1. Generate ssh key
 ```shell
 sudo apt install openssh-server
 ssh-keygen
 ```
-2. Copy SSH key and [auth on GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account): 
+2. Print and copy contents of SSH key: 
 ```shell
 $ cat ~/.ssh/id_ed25519.pub
 ```
-3. clone repo with ssh key: git@github.com:murrayb52/linux_setup.git
+3. Register SSH key on GitHub through [GitHub Settings > Keys](https://github.com/settings/keys). More details: [Adding a new SSH key to your account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account)
+
+4. Clone repo with ssh key: git@github.com:murrayb52/linux_setup.git
 ```shell
-git clone git@github.com:murrayb52/linux_setup.git
+$ mkdir ~/project
+$ cd ~/projects
+$ git clone git@github.com:murrayb52/linux_setup.git
 ```
 
-# i3-gaps Setup Notes
+### Previous Issues
+If you can't clone to projects as with the below error, ensure `~/projects` is owned by the same user that you generated ssh keys for. If you accidentally create `~/projects` with root user (via sudo), you will have to change the folder ownership or generate and register ssh keys for the root user. Rather fix the folder ownership as below:
 
-These notes are intended to live happily in **Obsidian** and document a full i3-gaps–based Linux desktop setup, including tweaks, fixes, inspiration, and custom key mappings.
+```shell
+murray@murray-work-ubuntu:~/projects $ git clone git@github.com:murrayb52/linux_setup.git
+fatal: could not create work tree dir 'linux_setup': Permission denied
 
+$ sudo chown -R murray:murray ~/projects
+
+$ git clone git@github.com:murrayb52/linux_setup.git
+Cloning into 'linux_setup'...
+Enter passphrase for key '/home/murray/.ssh/id_ed25519': 
+remote: Enumerating objects: 730, done.
+remote: Counting objects: 100% (387/387), done.
+remote: Compressing objects: 100% (183/183), done.
+remote: Total 730 (delta 182), reused 380 (delta 179), pack-reused 343 (from 1)
+Receiving objects: 100% (730/730), 58.88 MiB | 7.35 MiB/s, done.
+Resolving deltas: 100% (324/324), done.
+```
+
+Success!
+
+## 2. Setup Obsidian Vault
+
+### Overview
+An Obsidian Vault is used for recording learnt Linux knowledge that is often needed. The minimal notes needed for installing and configuring a new Linux are tracked in the git repo: https://github.com/murrayb52/linux_setup but are designed to symlink to the Obsidian Vault.
+
+This doc explains how to quickly install and restore the ObsidianVault from a synced device using SyncThing.
+
+### 1) Install Obsidian
+Download the latest Obsidian .deb package from [https://obsidian.md/download](https://obsidian.md/download)
+
+Install the package:
+```shell
+cd ~/Downloads
+sudo dkpg -i obsidian_X.XX.X_amd64.deb
+```
+
+### 2) Install Syncthing (Linux desktop)
+
+```shell
+sudo apt update
+sudo apt install syncthing
+```
+
+Start & enable the user service (recommended):
+
+```shell
+# enable lingering if you want syncthing to run when not logged-in
+sudo loginctl enable-linger $USER
+
+# enable and start the systemd user service
+systemctl --user enable syncthing.service
+systemctl --user start syncthing.service
+```
+
+Access the web GUI at: http://127.0.0.1:8384/ (open in your browser). The first run will generate a device ID and an API key.
+
+### 3) Basic pairing (desktop ↔ phone)
+
+Note: this step assume the device you are syncing to already has the Obsidian Vault. If not, you will need to create the vault and the corresponding folder ID on SyncThing.
+- From new device: "Actions → Show ID"
+- From existing device: "Add Device", scan the barcode. Alternatively copy the Device ID to the new device, and give it name.
+- Select folder to sync using checkbox for *ObsidianVault*.
+- Enable *"Auto Accept"*
+- Complete device setup.
+
+### 4) Obsidian + Git Repo Integration (Symlinked Notes)
+
+The vault's *Linux/Setup* folder is designed to symlink to the *Obsidian Vault > Linux > Setup* folder in the `linux_setup` [git repo](https://github.com/murrayb52/linux_setup) so that crucial setup notes are available when setting up a new linux install with this repo.  The result is a single Obsidian vault with minimal notes managed by git.
+
+Create the symlink
+
+```bash
+ln -s ~/projects/linux-setup/setup-notes \
+      ~/ObsidianVault/Linux/Setup
+```
+
+Check the symlink worked:
+![[Pasted image 20260304120239.png]]
+
+![[Pasted image 20260304120423.png]]
+
+You can now navigate the setup notes directly from Obsidian!
+
+### (Additional) More SyncThing settings for Obsidian Vault
+#### Ignore patterns for Obsidian Valuts (.stignore)
+
+Add an ignore file in the folder options or in the Syncthing GUI to avoid syncing transient or local-only files. Example ignores:
+
+```
+.obsidian/workspace
+.obsidian/local/*
+cache
+*.tmp
+index.lock
+```
+
+#### Conflict handling and tips
+
+- Syncthing will create conflict files named like `file (sync-conflict-YYYYMMDD-HHMMSS).ext` when changes happen on both devices. Merge manually in Obsidian when that occurs.
+- Use versioning (see folder settings) to recover previous file states.
+- Avoid editing the same note simultaneously on both devices if possible.
+
+#### Security & remote access
+
+- By default the Syncthing GUI listens only on localhost. If you need to access it remotely, use an SSH tunnel or secure reverse proxy.
+- Keep Device IDs private and only approve devices you control.
+
+### References & further reading
+- Syncthing official: https://syncthing.net/
+- Syncthing Android (F-Droid / Play Store)
 ---
 
-## i3-gaps
+## 3. Setup i3
 
 **Project**  
 - https://github.com/Airblader/i3
@@ -59,30 +173,6 @@ chmod 777 ~/.config -R
 
 ---
 
-# Obsidian + Git Repo Integration (Symlinked Notes)
-
-This vault includes notes that live inside a **Git repository** but appear as part of the main Obsidian vault via a **symlink**.
-
-This allows:
-- Linux / infra notes to live in Git
-- Everything else to sync via Syncthing
-- A single Obsidian graph, search space, and backlink system
-
-## Symlink Setup
-
-### Goal
-Expose repo-backed notes inside the Obsidian vault **without duplicating files**.
-
-### Paths
-- Obsidian vault: `~/ObsidianVault`
-- Linux setup repo notes: `~/projects/linux-setup/linux-setup/notes`
-
-### Create the symlink
-
-```bash
-ln -s ~/projects/linux-setup/linux-setup/notes \
-      ~/ObsidianVault/Linux
-```
 ## Common Issues & Fixes
 
 > 📚 **See [[troubleshooting-index]] for a complete list of resolved issues**
