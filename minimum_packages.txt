@@ -22,4 +22,5 @@ fonts-font-awesome      # icon font commonly used by polybar
 
 # Optional (uncomment if you use these features):
 # pulseaudio            # sound server (if not already present)
-# pavucontrol          # GUI mixer for PulseAudio
+# pavucontrol           # GUI mixer for PulseAudio
+# fzf                   # used by switch_wallpaper.sh for interactive wallpaper selection
