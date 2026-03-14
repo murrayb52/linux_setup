@@ -63,7 +63,7 @@ font-1 = "Hack-Regular:size=10.5;-3"
 font-2 = "FontAwesome:size=2;-5"
 
 modules-left = cpu separator mem separator disk separator ipv4 separator local-ip
-modules-right = pulseaudio power
+modules-right = pulseaudio battery power
 
 line-size = 2
 border-left-size = 10
@@ -302,26 +302,38 @@ content-padding = 4
 [module/battery]
 type = internal/battery
 full-at = 100
-battery = BAT0
-adapter = AC
+battery = BAT1
+adapter = ACAD
 poll-interval = 5
 
+; Charging: keep neutral color
 format-charging = <label-charging>
 format-charging-padding = ${vars.spacing}
 label-charging =   %percentage%%
 
-format-discharging = <ramp-capacity> <label-discharging>
-label-discharging = %percentage%%
+; Discharging/Full: ramp controls icon + color, label shows percentage
+format-discharging = <ramp-capacity><label-discharging>
 format-discharging-padding = ${vars.spacing}
+label-discharging = " %percentage%%%{F-}"
 
-label-full =   %percentage%%
-label-full-padding = ${vars.spacing}
+format-full = <ramp-capacity><label-full>
+format-full-padding = ${vars.spacing}
+label-full = " %percentage%%%{F-}"
 
-ramp-capacity-4 = 
-ramp-capacity-3 = 
-ramp-capacity-2 = 
-ramp-capacity-1 = 
-ramp-capacity-0 = 
+; 10-step ramp so we can approximate 10% and 25% thresholds
+;  0  =   0–9%   → red
+;  1–2 = 10–29%  → orange
+;  3–9 = 30–100% → normal text color
+ramp-capacity-0 = "%{F#bd2c40} "
+ramp-capacity-1 = "%{F#bd7023} "
+ramp-capacity-2 = "%{F#bd7023} "
+ramp-capacity-3 = "%{F#adc0b0} "
+ramp-capacity-4 = "%{F#adc0b0} "
+ramp-capacity-5 = "%{F#adc0b0} "
+ramp-capacity-6 = "%{F#adc0b0} "
+ramp-capacity-7 = "%{F#adc0b0} "
+ramp-capacity-8 = "%{F#adc0b0} "
+ramp-capacity-9 = "%{F#adc0b0} "
 
 [module/pulseaudio]
 type = internal/pulseaudio

@@ -164,7 +164,6 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # force applications to open in specific workspace
 assign [class="Firefox"] $ws1
 assign [class="Thunar"] $ws4
-for_window [class="Tidal"] move to workspace $ws10
 assign [class="code"] $ws3
 
 # reload the configuration file
