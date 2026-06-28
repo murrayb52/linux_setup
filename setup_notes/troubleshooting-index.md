@@ -2,6 +2,15 @@
 
 Quick reference for common issues encountered during i3-gaps + Polybar setup.
 
+## Hardware-Specific Issues
+
+### ASUS Vivobook S14
+- **[[hardware-asus-vivobook-s14-wifi-suspend]]** — Wi-Fi dies permanently after lid close / suspend
+  - Root cause: s2idle puts RTL8852BE into D3cold (PCIe fully powered off); device vanishes from bus
+  - Fix: udev rule `ATTR{d3cold_allowed}="0"` on `0000:01:00.0` — keeps device on bus during s2idle
+  - S3 deep sleep also fixes Wi-Fi but breaks WMI hotkeys (F4–F12) — do not use
+  - Also covers: GRUB kernel pinning (6.14 won't boot, use 6.12 mainline)
+
 ## Critical Issues (Resolved)
 
 ### Status Bar / Taskbar Issues
