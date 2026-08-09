@@ -170,7 +170,7 @@ assign [class="Thunar"] $ws4
 assign [class="code"] $ws3
 
 # open Claude Code in the general-help sandbox folder
-bindsym $mod+Shift+c exec --no-startup-id "alacritty --working-directory ~/claude-sandbox -e zsh -ic 'claude; exec zsh'"
+bindsym $mod+Shift+c exec --no-startup-id "env WINIT_X11_SCALE_FACTOR=1 alacritty --working-directory ~/claude-sandbox -e zsh -ic 'claude; exec zsh'"
 # restart i3 inplace (preserves your layout/session, also re-reads this config)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
