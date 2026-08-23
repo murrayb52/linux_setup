@@ -8,13 +8,18 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DOTFILES_DIR="$SCRIPT_DIR"
 
 # Helper: backup existing file/dir if present
+# Must MOVE the original out of the way, not copy it - if it's still there
+# afterward, `ln -sfn` on an existing real directory nests the new symlink
+# INSIDE it instead of replacing it, silently leaving the "symlink" a dead
+# stray file and the live config a frozen copy disconnected from the repo.
+# See setup_notes/dotfiles-symlinks-not-applied.md.
 backup_if_exists() {
     local target="$1"
-    if [ -e "$target" ]; then
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
         local backup_dir="$BACKUP_DIR"
         mkdir -p "$backup_dir"
         local base=$(basename "$target")
-        cp -r "$target" "$backup_dir/${base}.backup.$(date +%Y%m%d_%H%M%S)" 2>/dev/null || true
+        mv "$target" "$backup_dir/${base}.backup.$(date +%Y%m%d_%H%M%S)"
     fi
 }
 
