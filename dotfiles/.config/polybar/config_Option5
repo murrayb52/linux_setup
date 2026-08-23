@@ -63,7 +63,7 @@ font-1 = "Hack-Regular:size=10.5;-3"
 font-2 = "FontAwesome:size=2;-5"
 
 modules-left = cpu separator mem separator disk separator ipv4 separator local-ip
-modules-right = pulseaudio battery power
+modules-right = pulseaudio battery lid power
 
 line-size = 2
 border-left-size = 10
@@ -205,6 +205,35 @@ menu-0-4-background = ${color.highlight}
 menu-0-4-underline = ${color.accent}
 menu-0-4-exec = ~/.bin/scripts/lockwallpaper.sh
 menu-0-4-overline = ${color.accent}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Lid switch (sleep on close vs. stay awake)
+;; See ~/.bin/scripts/lid-mode.sh for the underlying toggle logic.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[module/lid]
+type = custom/menu
+expand-left = true
+label-open = ""
+label-close = " ✖ "
+label-open-padding = 3
+label-close-padding = 3
+label-open-overline = ${color.accent}
+label-close-overline = ${color.accent}
+label-close-background = ${color.strong-highlight}
+label-open-background = ${color.highlight}
+
+;Rocker switch: pick exactly one of the two, never both, never neither.
+menu-0-0 = " Sleep"
+menu-0-0-padding = ${vars.menu-spacing}
+menu-0-0-background = ${color.highlight}
+menu-0-0-exec = ~/.bin/scripts/lid-mode.sh sleep
+menu-0-0-overline = ${color.accent}
+menu-0-1 = " Awake"
+menu-0-1-padding = ${vars.menu-spacing}
+menu-0-1-background = ${color.highlight}
+menu-0-1-exec = ~/.bin/scripts/lid-mode.sh awake
+menu-0-1-overline = ${color.accent}
+
 
 [module/mem]
 type = internal/memory
