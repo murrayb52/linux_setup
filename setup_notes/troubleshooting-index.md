@@ -30,6 +30,18 @@ Quick reference for common issues encountered during i3-gaps + Polybar setup.
   - Robust IP detection method
   - Script explanation
 
+### Lid Switch
+- **[[polybar-lid-switch]]** — toggle lid-close sleep behaviour from the bar
+  - Rocker-style popup next to the power button; `lid-mode.sh` masks/unmasks the sleep targets
+  - Needs a sudoers rule at `/etc/sudoers.d/lid-mode` that a plain repo restore won't create
+
+## Known Bugs (Not Yet Fixed)
+
+- **[[dotfiles-symlinks-not-applied]]** — `restore_config.sh`'s `backup_if_exists` copies
+  instead of moving the existing config, so `~/.config/polybar` and `~/.bin` are stuck as
+  frozen copies, not symlinks into the repo. Editing files in `dotfiles/` silently doesn't
+  reach the live system until this is fixed or the live dirs are manually re-symlinked.
+
 ## Main Documentation
 - **[[setup_notes]]** - Comprehensive i3-gaps setup guide
   - Installation instructions
