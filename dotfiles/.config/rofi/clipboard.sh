@@ -17,8 +17,28 @@
 # in rofi is mapped back to its original, untouched array element via an
 # index prefix, so what actually gets copied is the exact original text -
 # newlines and all - not the flattened preview.
+#
+# Two more subtleties, found when a selected entry pasted as the wrong text:
+#
+# 1. clipster tracks PRIMARY and CLIPBOARD as two completely independent
+#    histories. `clipster -o` with no board flag defaults to PRIMARY (every
+#    mouse-drag text selection, an extremely noisy source) - the previous
+#    version of this script never passed `-c`, so the picker was silently
+#    listing PRIMARY history while everyone thinks of "clipboard" as
+#    Ctrl+C/CLIPBOARD. Explicitly reading CLIPBOARD below.
+#
+# 2. clipster's daemon owns the CLIPBOARD/PRIMARY GTK selections itself and
+#    watches for external ownership changes to record new history. Setting
+#    the selection with an outside tool (`xclip -selection clipboard`) hands
+#    ownership to that external process instead, which can race clipster's
+#    own "reinstate last entry on empty selection" handler and get stomped
+#    back to whatever was last really copied. Writing through `clipster -c`/
+#    `-p` instead updates the daemon's own GTK clipboard object directly, no
+#    external ownership handoff involved. Both boards are written so the
+#    paste keybinding gets the right text regardless of which one it reads
+#    from (Shift+Insert conventionally pastes PRIMARY in many X11 apps).
 
-mapfile -d '' -t entries < <(clipster -o -n 20 -0)
+mapfile -d '' -t entries < <(clipster -c -o -n 20 -0)
 
 MENU=""
 for i in "${!entries[@]}"; do
@@ -30,10 +50,12 @@ CHOICE=$(printf '%s' "${MENU%$'\n'}" | rofi -dmenu -p "📋 Clipboard" -i -locat
 
 if [ -n "$CHOICE" ]; then
     if [[ "$CHOICE" =~ ^\[([0-9]+)\] ]] && [ -n "${entries[${BASH_REMATCH[1]}]+_}" ]; then
-        printf '%s' "${entries[${BASH_REMATCH[1]}]}" | xclip -selection clipboard
+        TEXT="${entries[${BASH_REMATCH[1]}]}"
     else
         # Fell through to a custom/unmatched rofi entry - use it verbatim.
-        printf '%s' "$CHOICE" | xclip -selection clipboard
+        TEXT="$CHOICE"
     fi
+    printf '%s' "$TEXT" | clipster -c
+    printf '%s' "$TEXT" | clipster -p
     xdotool key --clearmodifiers shift+Insert
 fi
