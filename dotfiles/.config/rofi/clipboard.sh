@@ -46,7 +46,55 @@ for i in "${!entries[@]}"; do
     MENU+="[$i] $preview"$'\n'
 done
 
-CHOICE=$(printf '%s' "${MENU%$'\n'}" | rofi -dmenu -p "📋 Clipboard" -i -location 0 -theme-str 'window {width: 600px; x-offset: 0; y-offset: 0; location: center;}')
+# Colours pulled from the bottom polybar's [color] section (config_Option5)
+# so this popup matches the bar it's launched from: overall background/text
+# match the bar itself, and the selected row uses the same green
+# (strong-highlight) the bar shows behind the lid/power icon once its menu
+# is open (label-close-background). The base config.rasi's
+# #element.normal.normal etc. rules are written in terms of @normal-background/
+# @normal-foreground/... variables from its own top-level `* {}` block, not
+# literal colours - so overriding those variables (rather than re-declaring
+# the element selectors directly, which the cascade ignored) is what
+# actually reaches the rendered rows.
+ROFI_THEME='
+* {
+    background:                  #bb010101;
+    foreground:                  #adc0b0;
+    normal-background:           #bb010101;
+    normal-foreground:           #adc0b0;
+    alternate-normal-background: #bb010101;
+    alternate-normal-foreground: #adc0b0;
+    selected-normal-background:  #255426;
+    selected-normal-foreground:  #adc0b0;
+}
+window {
+    width: 600px;
+    x-offset: 0;
+    y-offset: 0;
+    location: center;
+    background-color: #bb010101;
+    border: 2px;
+    border-color: #548550;
+    border-radius: 10px;
+}
+element {
+    border-radius: 6px;
+    padding: 6px;
+}
+inputbar {
+    background-color: transparent;
+    text-color: #adc0b0;
+}
+prompt {
+    text-color: #adc0b0;
+}
+entry {
+    text-color: #adc0b0;
+    placeholder-color: #8dabc8;
+}
+'
+
+CHOICE=$(printf '%s' "${MENU%$'\n'}" | rofi -dmenu -p "📋 Clipboard" -i -location 0 -theme-str "$ROFI_THEME")
 
 if [ -n "$CHOICE" ]; then
     if [[ "$CHOICE" =~ ^\[([0-9]+)\] ]] && [ -n "${entries[${BASH_REMATCH[1]}]+_}" ]; then
