@@ -13,8 +13,9 @@ fi
 CONNECTED=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
 
 if [ -n "$CONNECTED" ]; then
-    # Connected - show bright green
-    echo "%{F#00ff00}WiFi%{F-}"
+    # Connected - show the bar's accent green (matches config_Option5's
+    # ${color.accent}, e.g. the lid/power menu border)
+    echo "%{F#548550}WiFi%{F-}"
 else
     # On but not connected - show white
     echo "%{F#ffffff}WiFi%{F-}"

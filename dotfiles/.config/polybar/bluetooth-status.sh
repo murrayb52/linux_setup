@@ -13,8 +13,9 @@ fi
 CONNECTED_COUNT=$(bluetoothctl devices Connected 2>/dev/null | wc -l)
 
 if [ "$CONNECTED_COUNT" -gt 0 ]; then
-    # Connected - show bright green
-    echo "%{F#00ff00}BT%{F-}"
+    # Connected - show the bar's accent green (matches config_Option5's
+    # ${color.accent}, e.g. the lid/power menu border)
+    echo "%{F#548550}BT%{F-}"
 else
     # On but not connected - show white
     echo "%{F#ffffff}BT%{F-}"
