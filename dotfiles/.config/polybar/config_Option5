@@ -47,7 +47,7 @@ font-2 = "Hack Nerd Font:size=13;6"
 ;Material Design Icons does (see wifi-status.sh / bluetooth-status.sh)
 modules-left = i3
 modules-center = time
-modules-right = wifi-module bluetooth-module
+modules-right = wifi-module bluetooth-module mail-module
 ;tray-position = right
 ;tray-underline = ${color.c4}
 line-size = 1.5
@@ -474,7 +474,7 @@ exec = ~/.config/polybar/wifi-status.sh
 interval = 5
 click-left = ~/.config/polybar/wifi-menu.sh &
 label = %output%
-label-padding = 1
+label-padding = 2
 
 
 [module/bluetooth-module]
@@ -484,3 +484,10 @@ interval = 5
 click-left = ~/.config/polybar/bluetooth-menu.sh &
 label = %output%
 label-padding = 1
+
+
+[module/mail-module]
+type = custom/text
+content = 
+click-left = ~/.config/polybar/tuta-mail.sh &
+content-padding = 1
