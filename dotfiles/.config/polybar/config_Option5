@@ -47,7 +47,7 @@ font-2 = "Hack Nerd Font:size=13;6"
 ;Material Design Icons does (see wifi-status.sh / bluetooth-status.sh)
 modules-left = i3
 modules-center = time
-modules-right = wifi-module bluetooth-module mail-module
+modules-right = wifi-module bluetooth-module mail-module localsend-module
 ;tray-position = right
 ;tray-underline = ${color.c4}
 line-size = 1.5
@@ -153,11 +153,11 @@ label-open-background = ${color.highlight}
 menu-0-0 = 
 menu-0-0-padding = 2
 menu-0-0-background = ${color.highlight}
-menu-0-0-exec = menu-open-1
+menu-0-0-exec = #power.open.1
 menu-0-0-overline = ${color.accent}
 menu-1-0 = cancel
 menu-1-0-padding = ${vars.menu-spacing}
-menu-1-0-exec = menu-close
+menu-1-0-exec = #power.close
 menu-1-0-overline = ${color.accent}
 menu-1-1 = confirm
 menu-1-1-padding = ${vars.menu-spacing}
@@ -168,11 +168,11 @@ menu-1-1-overline = ${color.accent}
 menu-0-1 = 
 menu-0-1-padding = 2
 menu-0-1-background = ${color.highlight}
-menu-0-1-exec = menu-open-2
+menu-0-1-exec = #power.open.2
 menu-0-1-overline = ${color.accent}
 menu-2-0 = cancel
 menu-2-0-padding = ${vars.menu-spacing}
-menu-2-0-exec = menu-close
+menu-2-0-exec = #power.close
 menu-2-0-overline = ${color.accent}
 menu-2-1 = confirm
 menu-2-1-padding = ${vars.menu-spacing}
@@ -184,7 +184,7 @@ menu-0-2 = 
 menu-0-2-padding = 2
 menu-0-2-background = ${color.highlight}
 menu-0-2-underline = ${color.accent}
-menu-0-2-exec = menu-open-3
+menu-0-2-exec = #power.open.3
 menu-0-2-overline = ${color.accent}
 menu-3-0 = logout
 menu-3-0-padding = ${vars.menu-spacing}
@@ -192,14 +192,14 @@ menu-3-0-exec = i3-msg exit
 menu-3-0-overline = ${color.accent}
 menu-3-1 = cancel
 menu-3-1-padding = ${vars.menu-spacing}
-menu-3-1-exec = menu-close
+menu-3-1-exec = #power.close
 menu-3-1-overline = ${color.accent}
 
 ; Switch user menu
 menu-0-3 = 
 menu-0-3-padding = 2
 menu-0-3-background = ${color.highlight}
-menu-0-3-exec = dm-tool switch-to-greeter
+menu-0-3-exec = gdmflexiserver
 menu-0-3-overline = ${color.accent}
 
 ;Lock menu
@@ -207,7 +207,7 @@ menu-0-4 = 
 menu-0-4-padding = 2
 menu-0-4-background = ${color.highlight}
 menu-0-4-underline = ${color.accent}
-menu-0-4-exec = ~/.bin/scripts/lockwallpaper.sh
+menu-0-4-exec = i3lock
 menu-0-4-overline = ${color.accent}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -490,4 +490,11 @@ label-padding = 1
 type = custom/text
 content = 
 click-left = ~/.config/polybar/tuta-mail.sh &
+content-padding = 1
+
+
+[module/localsend-module]
+type = custom/text
+content = 
+click-left = ~/.config/polybar/localsend.sh &
 content-padding = 1

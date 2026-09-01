@@ -222,10 +222,12 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # Custom commands made by user
 bindsym $mod+shift+Escape exec /home/muzz/.bin/scripts/lockgraphic.sh
-bindsym $mod+n workspace $ws4; exec nautilus
 bindsym $mod+c exec code
 bindsym $mod+Shift+p exec flameshot gui
 bindsym $mod+Shift+w exec /home/muzz/tools/soupawhisper/run.sh
+# Trigger the default action (e.g. opening Tuta) of the topmost notification -
+# dunst only does this on middle-click by default, which is awkward on a touchpad.
+bindsym $mod+n exec dunstctl action
 exec --no-startup-id pactl set-default-source alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__hw_sofhdadsp_6__source
 
 # Media player controls
@@ -246,7 +248,7 @@ exec_always feh --bg-scale ~/Pictures/Wallpapers/GreenLeaves2.jpg ~/Pictures/Wal
 #exec firefox
 #exec tidal-hifi
 # picom compositor for transparency and smooth rendering
-exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf --log-file ~/.cache/picom.log
 
 ####################################
 # i3-gaps
@@ -255,13 +257,14 @@ exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 #You can also use any non-zero value if you'd like to have a border
 for_window [class=".*"] border pixel 5
 
-# Floating utility windows launched from the polybar wifi/bluetooth/mail icons
-# (see dotfiles/.config/polybar/wifi-menu.sh, bluetooth-menu.sh, tuta-mail.sh) -
+# Floating utility windows launched from the polybar wifi/bluetooth/mail/localsend icons
+# (see dotfiles/.config/polybar/wifi-menu.sh, bluetooth-menu.sh, tuta-mail.sh, localsend.sh) -
 # --class=floating-nmtui is set explicitly at launch since nmtui runs
-# inside a generic terminal; blueman-manager and tutanota-desktop already have their own class.
+# inside a generic terminal; blueman-manager, tutanota-desktop and localsend_app already have their own class.
 for_window [class="floating-nmtui"] floating enable, move position center
 for_window [class="Blueman-manager"] floating enable, resize set 600 500, move position center
 for_window [class="tutanota-desktop"] floating enable, resize set 1200 800, move position center
+for_window [class="Localsend_app"] floating enable, resize set 900 650, move position center
 
 gaps inner 10
 gaps outer 0
