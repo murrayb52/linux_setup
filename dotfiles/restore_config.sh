@@ -58,6 +58,7 @@ mkdir -p "$BACKUP_DIR"
 [ -d ~/.config/i3 ] && cp -r ~/.config/i3 "$BACKUP_DIR/"
 [ -d ~/.config/picom ] && cp -r ~/.config/picom "$BACKUP_DIR/"
 [ -d ~/.config/rofi ] && cp -r ~/.config/rofi "$BACKUP_DIR/"
+[ -d ~/.config/autorandr ] && cp -r ~/.config/autorandr "$BACKUP_DIR/"
 [ -d ~/.bin ] && cp -r ~/.bin "$BACKUP_DIR/"
 
 echo "✓ Backup created at: $BACKUP_DIR"
@@ -93,6 +94,13 @@ if [ -d "$DOTFILES_DIR/.config/rofi" ]; then
     find "$HOME/.config/rofi" -type f -name "*.sh" -exec chmod +x {} \; || true
     find "$HOME/.config/rofi/scripts" -type f -name "*.sh" -exec chmod +x {} \; || true
     echo "✓ Rofi config installed (symlink)"
+fi
+
+# Autorandr (create symlink to config directory: display profiles + hotplug hook)
+if [ -d "$DOTFILES_DIR/.config/autorandr" ]; then
+    create_symlink "$DOTFILES_DIR/.config/autorandr" "$HOME/.config/autorandr"
+    find "$HOME/.config/autorandr" -path "*/postswitch.d/*" -type f -exec chmod +x {} \; || true
+    echo "✓ Autorandr config installed (symlink)"
 fi
 
 # Install .bin scripts (symlinked)

@@ -1,0 +1,7 @@
+#!/bin/sh
+# Runs after autorandr applies a new profile (hotplug or manual --change).
+# i3-msg reload picks up the workspace-output rules; it does NOT re-run
+# exec_always, so polybar's per-monitor launch has to be triggered separately
+# or bars on newly (dis)connected outputs never appear/disappear.
+i3-msg reload
+~/.config/polybar/launch.sh

@@ -14,6 +14,8 @@ polybar                 # status bar used by the dotfiles
 rofi                    # application launcher / menu
 picom                   # compositor (aka compton)
 feh                     # wallpaper/background tool
+arandr                  # GUI for arranging monitors via xrandr
+autorandr               # auto-switches display profiles on hotplug (see .config/autorandr)
 playerctl               # media player CLI used by status bar scripts
 i3lock                  # screen locker used by some scripts
 i3status                # simple status program for i3 (optional for polybar configs)

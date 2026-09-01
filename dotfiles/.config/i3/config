@@ -28,8 +28,9 @@ font pango:Hack, FontAwesome 10
 
 # Prevent sleep/hibernation
 exec_always --no-startup-id ~/.bin/scripts/screen_settings.sh
-# Configure displays and place workspaces on outputs
-exec_always --no-startup-id sh -c 'if xrandr | grep -q "^HDMI-1 connected"; then xrandr --output HDMI-1 --auto --above eDP-1 --output eDP-1 --auto; i3-msg "workspace 1; move workspace to output HDMI-1; workspace 2; move workspace to output eDP-1; workspace 3; move workspace to output HDMI-1; workspace 4; move workspace to output eDP-1; workspace 5; move workspace to output HDMI-1; workspace 6; move workspace to output eDP-1; workspace 7; move workspace to output HDMI-1; workspace 8; move workspace to output eDP-1; workspace 9; move workspace to output HDMI-1; workspace 10; move workspace to output eDP-1; workspace 1"; else xrandr --output eDP-1 --auto --output HDMI-1 --off; i3-msg "workspace 1; move workspace to output eDP-1; workspace 2; move workspace to output eDP-1; workspace 3; move workspace to output eDP-1; workspace 4; move workspace to output eDP-1; workspace 5; move workspace to output eDP-1; workspace 6; move workspace to output eDP-1; workspace 7; move workspace to output eDP-1; workspace 8; move workspace to output eDP-1; workspace 9; move workspace to output eDP-1; workspace 10; move workspace to output eDP-1; workspace 1"; fi'
+# Display layout is handled by autorandr (profiles: mobile / docked), which
+# reacts to hotplug via udev and reloads i3 through a postswitch hook.
+exec_always --no-startup-id autorandr --change
 # Set GTK theme to dark mode
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 exec_always --no-startup-id gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
@@ -128,8 +129,18 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# Workspace-to-output assignments are handled dynamically by the exec_always
-# script above, which detects whether HDMI-1 is connected at startup.
+# Workspace-to-output assignments. If HDMI-1 isn't connected, i3 falls back
+# to the only available output (eDP-1) for all of these.
+workspace 1 output HDMI-1
+workspace 2 output eDP-1
+workspace 3 output HDMI-1
+workspace 4 output eDP-1
+workspace 5 output HDMI-1
+workspace 6 output eDP-1
+workspace 7 output HDMI-1
+workspace 8 output eDP-1
+workspace 9 output HDMI-1
+workspace 10 output eDP-1
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
