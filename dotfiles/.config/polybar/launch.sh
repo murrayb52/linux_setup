@@ -36,10 +36,14 @@ case "$POLYBAR_OPTION" in
         MONITOR=$PRIMARY polybar -c "$SCRIPT_DIR/config_${POLYBAR_OPTION}" main &
         MONITOR=$PRIMARY polybar -c "$SCRIPT_DIR/config_${POLYBAR_OPTION}" bottom &
         
-        # Launch simple workspace bar on external monitors (only Option4 and Option5 have external bar)
+        # Mirror the same main/bottom bars onto external monitors (only Option4
+        # and Option5 have the external-monitor loop). main/bottom have no
+        # `monitor =` line in the config, so they follow whatever MONITOR is
+        # set to here, same as the laptop panel gets.
         if [ "$POLYBAR_OPTION" = "Option4" ] || [ "$POLYBAR_OPTION" = "Option5" ]; then
             for monitor in $(xrandr --query | grep " connected" | grep -v "primary" | cut -d" " -f1); do
-                MONITOR=$monitor polybar -c "$SCRIPT_DIR/config_${POLYBAR_OPTION}" external &
+                MONITOR=$monitor polybar -c "$SCRIPT_DIR/config_${POLYBAR_OPTION}" main &
+                MONITOR=$monitor polybar -c "$SCRIPT_DIR/config_${POLYBAR_OPTION}" bottom &
             done
         fi
         ;;
