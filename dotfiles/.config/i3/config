@@ -171,8 +171,8 @@ assign [class="Firefox"] $ws1
 assign [class="Thunar"] $ws4
 assign [class="code"] $ws3
 
-# open Claude Code in the general-help sandbox folder
-bindsym $mod+Shift+c exec --no-startup-id "env WINIT_X11_SCALE_FACTOR=1 alacritty --working-directory ~/claude-sandbox -e zsh -ic 'claude; exec zsh'"
+# choose a workspace and launch Pi in a terminal
+bindsym $mod+Shift+c exec --no-startup-id "env WINIT_X11_SCALE_FACTOR=1 alacritty -e zsh -ic 'exec ~/.bin/scripts/pi-menu.sh'"
 # restart i3 inplace (preserves your layout/session, also re-reads this config)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)

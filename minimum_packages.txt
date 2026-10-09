@@ -12,6 +12,9 @@ i3                      # i3 window manager (use distro package)
 
 polybar                 # status bar used by the dotfiles
 rofi                    # application launcher / menu
+alacritty               # terminal used by the Pi workspace launcher
+zsh                     # interactive shell used by the Pi workspace launcher
+whiptail                # terminal workspace menu (Super+Shift+c)
 picom                   # compositor (aka compton)
 feh                     # wallpaper/background tool
 arandr                  # GUI for arranging monitors via xrandr
