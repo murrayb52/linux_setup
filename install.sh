@@ -107,18 +107,21 @@ bash "$SCRIPT_DIR/restore_terminal.sh"
 echo -e "${BLUE}Installing flock...${NC}"
 if command -v go >/dev/null 2>&1; then
     mkdir -p "$HOME/.local/bin"
-    if GOBIN="$HOME/.local/bin" go install github.com/murrayb52/flock/cmd/flock@latest; then
+    # pinned to a reviewed commit; bump deliberately (go.sum checksums apply)
+    FLOCK_VERSION="d0717645582b265fe75c117ab787bb7caf782689"
+    if GOBIN="$HOME/.local/bin" go install "github.com/murrayb52/flock/cmd/flock@$FLOCK_VERSION"; then
         print_status "flock installed to ~/.local/bin"
-        read -r -p "Add flock's hooks to Claude Code and its extension to Pi? [Y/n] " RESP
+        # opt-in: the hooks run flock on every Claude Code turn, the extension inside Pi
+        read -r -p "Add flock's hooks to Claude Code and its extension to Pi? [y/N] " RESP
         case "$RESP" in
-            [nN]|[nN][oO]) print_status "Skipping flock agent integrations (run 'flock install all' later)" ;;
-            *) "$HOME/.local/bin/flock" install all ;;
+            [yY]|[yY][eE][sS]) "$HOME/.local/bin/flock" install all ;;
+            *) print_status "Skipping flock agent integrations (run 'flock install all' later)" ;;
         esac
     else
-        print_warning "flock install failed; retry with: go install github.com/murrayb52/flock/cmd/flock@latest"
+        print_warning "flock install failed (needs Go >= 1.24 and network access)"
     fi
 else
-    print_warning "Go not found: install Go >= 1.24, then: GOBIN=~/.local/bin go install github.com/murrayb52/flock/cmd/flock@latest"
+    print_warning "Go not found: install Go >= 1.24, then re-run this step"
 fi
 
 # Offer to set up Obsidian sync via Syncthing
