@@ -58,7 +58,7 @@ smart_borders on
 
 # start a terminal
 # flock terminals: a label header and per-agent notes (see flock.conf)
-bindsym $mod+Return exec alacritty -e flock term
+bindsym $mod+Return exec gnome-terminal -- flock term
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -119,9 +119,9 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:WellRead"
-set $ws2 "2:StudySmarterSite"
-set $ws3 "3:Life admin"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
@@ -168,9 +168,9 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # force applications to open in specific workspace
-# assign [class="Firefox"] $ws1   # off: workspaces are per project now, not per app
-# assign [class="Thunar"] $ws4   # off: workspaces are per project now, not per app
-# assign [class="code"] $ws3   # off: workspaces are per project now, not per app
+assign [class="Firefox"] $ws1
+assign [class="Thunar"] $ws4
+assign [class="code"] $ws3
 
 # choose a workspace and launch Pi in a terminal
 bindsym $mod+Shift+c exec --no-startup-id "env WINIT_X11_SCALE_FACTOR=1 alacritty -e zsh -ic 'exec ~/.bin/scripts/pi-menu.sh'"

@@ -108,7 +108,7 @@ echo -e "${BLUE}Installing flock...${NC}"
 if command -v go >/dev/null 2>&1; then
     mkdir -p "$HOME/.local/bin"
     # pinned to a reviewed commit; bump deliberately (go.sum checksums apply)
-    FLOCK_VERSION="d0717645582b265fe75c117ab787bb7caf782689"
+    FLOCK_VERSION="658a0f90282ebc120e3e58e514b8bab28564f355"
     if GOBIN="$HOME/.local/bin" go install "github.com/murrayb52/flock/cmd/flock@$FLOCK_VERSION"; then
         print_status "flock installed to ~/.local/bin"
         # opt-in: the hooks run flock on every Claude Code turn, the extension inside Pi
