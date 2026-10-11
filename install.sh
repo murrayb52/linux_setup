@@ -103,6 +103,24 @@ bash "$DOTFILES_DIR/restore_config.sh"
 echo -e "${BLUE}Running terminal & zsh restore...${NC}"
 bash "$SCRIPT_DIR/restore_terminal.sh"
 
+# flock: agent sidebar, labels, notes and notifications for i3 (wired up in .config/i3/flock.conf)
+echo -e "${BLUE}Installing flock...${NC}"
+if command -v go >/dev/null 2>&1; then
+    mkdir -p "$HOME/.local/bin"
+    if GOBIN="$HOME/.local/bin" go install github.com/murrayb52/flock/cmd/flock@latest; then
+        print_status "flock installed to ~/.local/bin"
+        read -r -p "Add flock's hooks to Claude Code and its extension to Pi? [Y/n] " RESP
+        case "$RESP" in
+            [nN]|[nN][oO]) print_status "Skipping flock agent integrations (run 'flock install all' later)" ;;
+            *) "$HOME/.local/bin/flock" install all ;;
+        esac
+    else
+        print_warning "flock install failed; retry with: go install github.com/murrayb52/flock/cmd/flock@latest"
+    fi
+else
+    print_warning "Go not found: install Go >= 1.24, then: GOBIN=~/.local/bin go install github.com/murrayb52/flock/cmd/flock@latest"
+fi
+
 # Offer to set up Obsidian sync via Syncthing
 echo ""
 read -r -p "Set up Obsidian sync with Syncthing now? [y/N] " RESP
