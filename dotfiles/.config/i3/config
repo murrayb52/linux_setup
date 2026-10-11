@@ -57,8 +57,10 @@ smart_borders on
 #border_radius 4
 
 # start a terminal
-# flock terminals: a label header and per-agent notes (see flock.conf)
-bindsym $mod+Return exec gnome-terminal -- flock term
+# flock terminals: a label header and per-agent notes (see flock.conf).
+# Full path: gnome-terminal's server runs with systemd's PATH, where a bare
+# `flock` is util-linux's file-locking tool.
+bindsym $mod+Return exec gnome-terminal -- ~/.local/bin/flock term
 
 # kill focused window
 bindsym $mod+Shift+q kill
