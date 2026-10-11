@@ -103,22 +103,22 @@ bash "$DOTFILES_DIR/restore_config.sh"
 echo -e "${BLUE}Running terminal & zsh restore...${NC}"
 bash "$SCRIPT_DIR/restore_terminal.sh"
 
-# flock: agent sidebar, labels, notes and notifications for i3 (wired up in .config/i3/flock.conf)
-echo -e "${BLUE}Installing flock...${NC}"
+# flockr: agent sidebar, labels, notes and notifications for i3 (wired up in .config/i3/flockr.conf)
+echo -e "${BLUE}Installing flockr...${NC}"
 if command -v go >/dev/null 2>&1; then
     mkdir -p "$HOME/.local/bin"
     # pinned to a reviewed commit; bump deliberately (go.sum checksums apply)
-    FLOCK_VERSION="e31e6affc8c2d7f95581d6b5a55cd93690c0fa72"
-    if GOBIN="$HOME/.local/bin" go install "github.com/murrayb52/flock/cmd/flock@$FLOCK_VERSION"; then
-        print_status "flock installed to ~/.local/bin"
-        # opt-in: the hooks run flock on every Claude Code turn, the extension inside Pi
-        read -r -p "Add flock's hooks to Claude Code and its extension to Pi? [y/N] " RESP
+    FLOCKR_VERSION="b01551831288c9cce3a9b232de94b9934ceabe02"
+    if GOBIN="$HOME/.local/bin" go install "github.com/murrayb52/flockr/cmd/flockr@$FLOCKR_VERSION"; then
+        print_status "flockr installed to ~/.local/bin"
+        # opt-in: the hooks run flockr on every Claude Code turn, the extension inside Pi
+        read -r -p "Add flockr's hooks to Claude Code and its extension to Pi? [y/N] " RESP
         case "$RESP" in
-            [yY]|[yY][eE][sS]) "$HOME/.local/bin/flock" install all ;;
-            *) print_status "Skipping flock agent integrations (run 'flock install all' later)" ;;
+            [yY]|[yY][eE][sS]) "$HOME/.local/bin/flockr" install all ;;
+            *) print_status "Skipping flockr agent integrations (run 'flockr install all' later)" ;;
         esac
     else
-        print_warning "flock install failed (needs Go >= 1.24 and network access)"
+        print_warning "flockr install failed (needs Go >= 1.24 and network access)"
     fi
 else
     print_warning "Go not found: install Go >= 1.24, then re-run this step"

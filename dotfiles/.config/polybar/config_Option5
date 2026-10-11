@@ -41,14 +41,14 @@ module-margin-right = 1
 font-0 = "FontAwesome:size=12;6"
 font-1 = Hack-Regular:size=10.5;6
 font-2 = "Hack Nerd Font:size=13;6"
-; flock status glyphs (⠋ ✓ ○)
+; flockr status glyphs (⠋ ✓ ○)
 font-3 = "DejaVu Sans:size=10;6"
 ;font-0 applies to the all icons
 ;font-1 applies to all bar text
 ;font-2 (select with %{T3}) is used for the wifi/bluetooth status icons -
 ;FontAwesome 4 has no wifi/bluetooth state variants, Nerd Font's bundled
 ;Material Design Icons does (see wifi-status.sh / bluetooth-status.sh)
-modules-left = flock
+modules-left = flockr
 modules-center = time
 modules-right = wifi-module bluetooth-module mail-module localsend-module
 ;tray-position = right
@@ -95,9 +95,9 @@ width = 100%
 height = 40px
 font-0 = "FontAwesome:size=11;4"
 font-1 = "Hack-Regular:size=10;4"
-; flock status glyphs (⠋ ✓ ○)
+; flockr status glyphs (⠋ ✓ ○)
 font-2 = "DejaVu Sans:size=10;4"
-modules-left = flock
+modules-left = flockr
 padding-left = 3
 padding-right = 3
 border-left-size = 5
@@ -105,16 +105,16 @@ border-right-size = 5
 border-top-size = 5
 radius = 5
 
-[module/flock]
-; workspaces with flock's agent status logo (github.com/murrayb52/flock):
+[module/flockr]
+; workspaces with flockr's agent status logo (github.com/murrayb52/flockr):
 ; ! needs you · ✓ done · spinner working · ○ idle; click to switch
 type = custom/script
-exec = flock bar
+exec = flockr bar
 tail = true
 format = <label>
 label = %output%
 
-; replaced by module/flock above; kept for the other themes' reference
+; replaced by module/flockr above; kept for the other themes' reference
 [module/i3]
 type = internal/i3
 pin-workspaces = true

@@ -14,7 +14,7 @@ polybar                 # status bar used by the dotfiles
 rofi                    # application launcher / menu
 alacritty               # terminal used by the Pi workspace launcher
 zsh                     # interactive shell used by the Pi workspace launcher
-tmux                    # flock terminals run inside a private, keyless tmux
+tmux                    # flockr terminals run inside a private, keyless tmux
 whiptail                # terminal workspace menu (Super+Shift+c)
 picom                   # compositor (aka compton)
 feh                     # wallpaper/background tool

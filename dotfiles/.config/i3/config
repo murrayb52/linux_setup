@@ -57,10 +57,9 @@ smart_borders on
 #border_radius 4
 
 # start a terminal
-# flock terminals: a label header and per-agent notes (see flock.conf).
-# Full path: gnome-terminal's server runs with systemd's PATH, where a bare
-# `flock` is util-linux's file-locking tool.
-bindsym $mod+Return exec gnome-terminal -- ~/.local/bin/flock term
+# flockr terminals: your default terminal (gnome-terminal) with a label header
+# and per-agent notes (see flockr.conf)
+bindsym $mod+Return exec flockr term
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -282,5 +281,5 @@ exec --no-startup-id clipster -d
 bindsym $mod+shift+v split v
 bindsym $mod+v exec --no-startup-id ~/.config/rofi/clipboard.sh
 
-# flock: agent sidebar, labels, notes, notifications
-include ~/.config/i3/flock.conf
+# flockr: agent sidebar, labels, notes, notifications
+include ~/.config/i3/flockr.conf
