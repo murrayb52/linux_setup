@@ -50,7 +50,7 @@ font-3 = "DejaVu Sans:size=10;6"
 ;Material Design Icons does (see wifi-status.sh / bluetooth-status.sh)
 modules-left = flockr
 modules-center = time
-modules-right = wifi-module bluetooth-module mail-module localsend-module
+modules-right = claude-usage wifi-module bluetooth-module mail-module localsend-module
 ;tray-position = right
 ;tray-underline = ${color.c4}
 line-size = 1.5
@@ -501,6 +501,13 @@ click-left = ~/.config/polybar/bluetooth-menu.sh &
 label = %output%
 label-padding = 1
 
+
+[module/claude-usage]
+; Claude 5h usage %, reset time and 7d usage; hidden unless an agent is running
+type = custom/script
+exec = ~/.config/polybar/claude-usage.sh
+interval = 60
+format-padding = 1
 
 [module/mail-module]
 type = custom/text
