@@ -15,12 +15,12 @@ import time
 import unittest
 
 
-LAUNCHER = Path(__file__).resolve().parents[1] / "dotfiles/.bin/scripts/pi-menu.sh"
+LAUNCHER = Path(__file__).resolve().parents[1] / "dotfiles/.bin/scripts/launch-agent.sh"
 
 
-class PiMenuTests(unittest.TestCase):
+class LaunchAgentTests(unittest.TestCase):
     def setUp(self):
-        temporary = tempfile.TemporaryDirectory(prefix="pi menu tests ")
+        temporary = tempfile.TemporaryDirectory(prefix="launch agent tests ")
         self.addCleanup(temporary.cleanup)
         self.home = Path(temporary.name)
         self.bin = self.home / "bin"
@@ -32,6 +32,8 @@ class PiMenuTests(unittest.TestCase):
             **os.environ,
             "HOME": str(self.home),
             "PATH": str(self.bin) + ":/usr/bin:/bin",
+            "AGENT": "Pi",
+            "AGENT_STATUS": "0",
             "CHOICE": "General",
             "MENU_STATUS": "0",
             "PI_CWD": str(self.pi_cwd),
@@ -42,11 +44,13 @@ class PiMenuTests(unittest.TestCase):
         self.executable("whiptail", '''
 case " $* " in
     *" --msgbox "*) printf '%s\\n' "$*" > "$DIALOG"; exit 0 ;;
+    *" --default-item "*) printf '%s' "$AGENT" >&2; exit "$AGENT_STATUS" ;;
 esac
 printf '%s' "$CHOICE" >&2
 exit "$MENU_STATUS"
 ''')
         self.executable("pi", 'pwd -P > "$PI_CWD"\n')
+        self.executable("claude", 'pwd -P > "$PI_CWD"\n')
         self.executable("zsh", 'pwd -P > "$SHELL_CWD"\n')
 
     def executable(self, name, body):
@@ -55,8 +59,9 @@ exit "$MENU_STATUS"
         path.chmod(0o755)
         return path
 
-    def run_menu(self, choice="General", status=0):
-        self.env.update(CHOICE=choice, MENU_STATUS=str(status))
+    def run_menu(self, choice="General", status=0, agent="Pi", agent_status=0):
+        self.env.update(CHOICE=choice, MENU_STATUS=str(status),
+                        AGENT=agent, AGENT_STATUS=str(agent_status))
         return subprocess.run(
             ["/bin/bash", str(LAUNCHER)], env=self.env,
             stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=5,
@@ -119,6 +124,20 @@ exit "$MENU_STATUS"
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(self.pi_cwd.exists())
 
+    def test_claude_launches_in_selected_folder(self):
+        (self.bin / "pi").unlink()  # the launcher must run claude, not pi
+        result = self.run_menu(agent="Claude")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.pi_cwd.read_text().strip(), str(self.home / "claude-sandbox"))
+
+    def test_cancelling_agent_menu_does_not_launch_or_create_folders(self):
+        for status in (1, 255):
+            with self.subTest(status=status):
+                result = self.run_menu(agent_status=status)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertFalse(self.pi_cwd.exists())
+                self.assertFalse((self.home / "claude-sandbox").exists())
+
     def test_menu_error_is_not_treated_as_cancellation(self):
         result = self.run_menu(status=2)
         self.assertEqual(result.returncode, 2)
@@ -149,10 +168,10 @@ exit "$MENU_STATUS"
                 if not chunk:
                     break
                 output += chunk
-                if not sent_escape and b"StudySmarter" in output:
+                if not sent_escape and b"Claude" in output:
                     os.write(master, b"\x1b")
                     sent_escape = True
-            self.assertIn(b"StudySmarter", output, "Menu screen was not sent to the terminal")
+            self.assertIn(b"Claude", output, "Menu screen was not sent to the terminal")
             self.assertEqual(process.wait(timeout=1), 0)
             self.assertFalse(self.pi_cwd.exists())
         finally:

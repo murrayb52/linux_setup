@@ -173,8 +173,8 @@ assign [class="Firefox"] $ws1
 assign [class="Thunar"] $ws4
 assign [class="code"] $ws3
 
-# choose a workspace and launch Pi in a terminal
-bindsym $mod+Shift+c exec --no-startup-id "env WINIT_X11_SCALE_FACTOR=1 alacritty -e zsh -ic 'exec ~/.bin/scripts/pi-menu.sh'"
+# choose an agent (Claude/Pi) and a workspace, then launch it in a flockr terminal
+bindsym $mod+Shift+c exec --no-startup-id flockr term -- zsh -ic 'exec ~/.bin/scripts/launch-agent.sh'
 # restart i3 inplace (preserves your layout/session, also re-reads this config)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)

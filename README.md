@@ -108,31 +108,40 @@ Media Controls (disabled by default)
 - `$mod+n` - Open file manager (Nautilus)
 - `$mod+c` - Open calculator (SpeedCrunch)
 - `$mod+p` - Open PyCharm
-- `$mod+Shift+c` - Open the Pi workspace menu in Alacritty (replaces the Claude Code shortcut)
+- `$mod+Shift+c` - Open the agent menu (Claude or Pi) in a flockr terminal
 
-### Pi workspace menu
+### Agent launcher menu
 
-**Super+Shift+C** opens a terminal menu. Use arrow keys and Enter to choose:
+**Super+Shift+C** opens a menu in a flockr terminal (gnome-terminal with
+flockr's label header and notes). Use arrow keys and Enter to choose an agent,
+then a working folder:
 
-| Choice | Working folder |
+| Agent | Command |
+|---|---|
+| Claude (default) | `claude` |
+| Pi | `pi` |
+
+| Folder | Working folder |
 |---|---|
 | General | `~/claude-sandbox` (created if missing) |
 | WellRead | `~/projects/WellRead Project/wellread` |
 | StudySmarter | `~/projects/StudySmarter/StudySmarterSite` |
 
-Cancel or Escape closes the menu without launching Pi. Exiting Pi leaves a Zsh
-shell in the selected folder. Missing project folders show an error; they are
-never silently created. General is only a separate working folder, **not a
-security sandbox**.
+Cancel or Escape on either menu closes it without launching anything. Exiting
+the agent leaves a Zsh shell in the selected folder. Missing project folders
+show an error; they are never silently created. General is only a separate
+working folder, **not a security sandbox**.
 
-The launcher is `dotfiles/.bin/scripts/pi-menu.sh`, deployed through the existing
-`~/.bin` symlink by `dotfiles/restore_config.sh`. Alacritty, Zsh and whiptail are
-listed in `minimum_packages.txt`. Pi must be installed separately and available
-on `PATH`; the launcher also checks `~/.pi/agent/bin` and `~/.local/bin`.
+The launcher is `dotfiles/.bin/scripts/launch-agent.sh` (`pi-menu.sh` remains as
+a symlink to it), deployed through the existing `~/.bin` symlink by
+`dotfiles/restore_config.sh`. Zsh, tmux and whiptail are listed in
+`minimum_packages.txt`. Claude Code and Pi must be installed separately and
+available on `PATH`; the launcher also checks `~/.pi/agent/bin` and
+`~/.local/bin`.
 
-Edit the folder mapping in the launcher when projects move. Reload the binding
-with `i3-msg reload`. To open the menu from an existing terminal, run
-`~/.bin/scripts/pi-menu.sh`.
+Edit the agent and folder mappings in the launcher when they change. Reload the
+binding with `i3-msg reload`. To open the menu from an existing terminal, run
+`~/.bin/scripts/launch-agent.sh`.
 
 Launcher regression tests (Python 3, no extra test dependencies):
 
