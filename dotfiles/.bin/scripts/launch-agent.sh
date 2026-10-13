@@ -36,10 +36,11 @@ esac
 
 # 2. Choose the workspace folder.
 choice=$(whiptail --title "$agent — choose a workspace" \
-    --menu "Select a folder to launch $agent (arrow keys, then Enter):" 16 78 3 \
+    --menu "Select a folder to launch $agent (arrow keys, then Enter):" 17 78 4 \
     "General" "~/claude-sandbox" \
     "WellRead" "~/projects/WellRead Project/wellread" \
-    "StudySmarter" "~/projects/StudySmarter/StudySmarterSite" 3>&1 1>&2 2>&3)
+    "StudySmarter" "~/projects/StudySmarter/StudySmarterSite" \
+    "flockr" "~/projects/flockr" 3>&1 1>&2 2>&3)
 status=$?
 case "$status" in
     0) ;;
@@ -63,6 +64,7 @@ case "$choice" in
         ;;
     WellRead) directory="$HOME/projects/WellRead Project/wellread" ;;
     StudySmarter) directory="$HOME/projects/StudySmarter/StudySmarterSite" ;;
+    flockr) directory="$HOME/projects/flockr" ;;
     *) fail "Unknown workspace: $choice" ;;
 esac
 
