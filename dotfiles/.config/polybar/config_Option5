@@ -503,10 +503,12 @@ label-padding = 1
 
 
 [module/claude-usage]
-; Claude 5h usage %, reset time and 7d usage; hidden unless an agent is running
+; Claude 5h or 7d usage % and reset time (click to switch); hidden unless an agent is running
 type = custom/script
-exec = ~/.config/polybar/claude-usage.sh
-interval = 60
+; exec so %pid% is the script itself, not the sh wrapper polybar starts it with
+exec = exec ~/.config/polybar/claude-usage.sh
+tail = true
+click-left = kill -USR1 %pid%
 format-padding = 1
 
 [module/mail-module]
