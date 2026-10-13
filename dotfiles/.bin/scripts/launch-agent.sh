@@ -17,13 +17,28 @@ fi
 harness_names=("Claude Code" "Pi")
 harness_cmds=("claude" "pi")
 
-workspace_names=("General" "WellRead" "StudySmarter" "flockr")
+workspace_names=("General" "WellRead" "StudySmarter" "flockr" "linux-setup")
 workspace_dirs=(
     "$HOME/claude-sandbox"
     "$HOME/projects/WellRead Project/wellread"
     "$HOME/projects/StudySmarter/StudySmarterSite"
     "$HOME/projects/flockr"
+    "$HOME/projects/linux-setup"
 )
+
+# Permanent workspaces added from the menu, one "name<TAB>path" per line.
+saved_workspaces="${XDG_CONFIG_HOME:-$HOME/.config}/launch-agent/workspaces"
+if [[ -r $saved_workspaces ]]; then
+    while IFS=$'\t' read -r name dir; do
+        [[ -n $name && -n $dir ]] || continue
+        workspace_names+=("$name")
+        workspace_dirs+=("${dir/#\~/$HOME}")
+    done < "$saved_workspaces"
+fi
+
+new_label="+ New"
+workspace_names+=("$new_label")
+workspace_dirs+=("temporary or permanent folder")
 
 fail() {
     printf '\n  %s\n\n' "$1" >&2
@@ -41,6 +56,7 @@ draw() {
     printf '  Workspace:\n'
     for i in "${!workspace_names[@]}"; do
         if (( i == row )); then marker='›'; style='\e[7m'; else marker=' '; style=''; fi
+        (( i == count - 1 )) && printf '\n'
         printf "  %s ${style} %-14s\e[0m \e[2m%s\e[0m\n" "$marker" "${workspace_names[$i]}" "${workspace_dirs[$i]/#$HOME/\~}"
     done
     printf '\n  \e[2m↑/↓ workspace · Tab/Shift+Tab harness · Enter launch · Esc/q quit\e[0m'
@@ -73,6 +89,34 @@ done
 
 restore_screen
 trap - EXIT
+
+# "New…": ask for a throwaway temp folder or a named folder that is saved to
+# the menu for next time.
+if (( row == count - 1 )); then
+    printf '\n  \e[1mNew workspace\e[0m\n\n  [t] Temporary (deleted on reboot)\n  [p] Permanent (added to this menu)\n\n  Choice: '
+    IFS= read -rsn1 kind
+    printf '%s\n\n' "$kind"
+    case "$kind" in
+        t|T)
+            dir=$(mktemp -d "${TMPDIR:-/tmp}/agent-XXXXXX") || fail "Could not create a temporary folder."
+            workspace_names[$row]="Temporary"
+            ;;
+        p|P)
+            read -rp '  Name: ' name
+            [[ -n $name && $name != *$'\t'* ]] || fail "A name is required."
+            read -re -i "~/projects/$name" -p '  Folder: ' dir
+            dir=${dir/#\~/$HOME}
+            [[ -n $dir ]] || fail "A folder is required."
+            mkdir -p -- "$dir" || fail "Could not create folder: $dir"
+            mkdir -p -- "${saved_workspaces%/*}" \
+                && printf '%s\t%s\n' "$name" "${dir/#$HOME/\~}" >> "$saved_workspaces" \
+                || fail "Could not save workspace to $saved_workspaces"
+            workspace_names[$row]=$name
+            ;;
+        *) exit 0 ;;
+    esac
+    workspace_dirs[$row]=$dir
+fi
 
 agent=${harness_names[$harness]}
 agent_cmd=${harness_cmds[$harness]}
