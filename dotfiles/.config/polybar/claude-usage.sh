@@ -15,13 +15,11 @@ creds="$HOME/.claude/.credentials.json"
 # Last good reading, shown greyed out if a request fails so the bar doesn't flicker.
 cache="${XDG_RUNTIME_DIR:-/tmp}/polybar-claude-usage"
 
-token=$(jq -r '.claudeAiOauth.accessToken // empty' "$creds")
-[[ -n $token ]] || exit 0
-
-# Header goes in on stdin so the token never shows up in `ps`.
-json=$(printf 'Authorization: Bearer %s\n' "$token" \
-    | curl -sf -m 8 -H @- -H "anthropic-beta: oauth-2025-04-20" \
-        https://api.anthropic.com/api/oauth/usage)
+# The endpoint rate-limits (429) when polled every minute, so ask at most once
+# per max_age seconds, failures included. The stamp's mtime is when we last
+# asked; its contents ("ok"/"fail") whether that worked.
+stamp="$cache.asked"
+max_age=300
 
 # Polybar markup: T3 = Hack Nerd Font (icons and gauge line).
 dim='#8dabc8'
@@ -54,22 +52,40 @@ render() {
     echo
 }
 
-# Fields: 5h %, 5h reset (local HH:MM), 7d % (may be empty).
-fields=$(jq -r '
-    def at: sub("\\.[0-9]+.*$"; "Z") | fromdateiso8601 | strflocaltime("%H:%M");
-    select(.five_hour)
-    | [(.five_hour.utilization // 0 | floor),
-       (.five_hour.resets_at | at),
-       (.seven_day.utilization // "" | if . == "" then . else floor end)]
-    | @tsv
-' <<<"$json" 2>/dev/null)
+if [[ -r $stamp ]] && (( $(date +%s) - $(stat -c %Y "$stamp") < max_age )); then
+    status=$(<"$stamp")
+else
+    token=$(jq -r '.claudeAiOauth.accessToken // empty' "$creds")
+    [[ -n $token ]] || exit 0
 
-if [[ -n $fields ]]; then
-    printf '%s\n' "$fields" > "$cache"
-    IFS=$'\t' read -r five reset week <<<"$fields"
+    # Header goes in on stdin so the token never shows up in `ps`.
+    json=$(printf 'Authorization: Bearer %s\n' "$token" \
+        | curl -sf -m 8 -H @- -H "anthropic-beta: oauth-2025-04-20" \
+            https://api.anthropic.com/api/oauth/usage)
+
+    # Fields: 5h %, 5h reset (local HH:MM), 7d % (may be empty).
+    fields=$(jq -r '
+        def at: sub("\\.[0-9]+.*$"; "Z") | fromdateiso8601 | strflocaltime("%H:%M");
+        select(.five_hour)
+        | [(.five_hour.utilization // 0 | floor),
+           (.five_hour.resets_at | at),
+           (.seven_day.utilization // "" | if . == "" then . else floor end)]
+        | @tsv
+    ' <<<"$json" 2>/dev/null)
+
+    status=fail
+    if [[ -n $fields ]]; then
+        printf '%s\n' "$fields" > "$cache"
+        status=ok
+    fi
+    echo "$status" > "$stamp"
+fi
+
+[[ -r $cache ]] || exit 0
+IFS=$'\t' read -r five reset week < "$cache"
+if [[ $status == ok ]]; then
     render "$five" "$reset" "$week"
-elif [[ -r $cache ]]; then
+else
     # Stale reading: show it greyed out.
-    IFS=$'\t' read -r five reset week < "$cache"
     render "$five" "$reset" "$week" | sed -E 's/%\{F#[0-9a-f]{6}\}/%{F#5a6a78}/g'
 fi
