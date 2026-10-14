@@ -48,7 +48,7 @@ font-3 = "DejaVu Sans:size=10;6"
 ;font-2 (select with %{T3}) is used for the wifi/bluetooth status icons -
 ;FontAwesome 4 has no wifi/bluetooth state variants, Nerd Font's bundled
 ;Material Design Icons does (see wifi-status.sh / bluetooth-status.sh)
-modules-left = flockr
+modules-left = flockr i3-mode
 modules-center = time
 modules-right = claude-usage wifi-module bluetooth-module mail-module localsend-module
 ;tray-position = right
@@ -113,6 +113,12 @@ exec = flockr bar
 tail = true
 format = <label>
 label = %output%
+
+[module/i3-mode]
+; current i3 binding mode (e.g. resize), blinking; hidden in the default mode
+type = custom/script
+exec = ~/.config/polybar/i3-mode.sh
+tail = true
 
 ; replaced by module/flockr above; kept for the other themes' reference
 [module/i3]
