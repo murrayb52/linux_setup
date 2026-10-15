@@ -276,6 +276,9 @@ smart_borders on
 # workspace <ws> gaps [inner|outer|horizontal|vertical|top|left|bottom|right] <px>
 
 
+# udiskie: automount USB drives (e.g. Garmin watch) under /media/muzz
+exec --no-startup-id udiskie --automount --notify --no-tray
+
 # Clipster + Rofi Clipboard Manager
 exec --no-startup-id clipster -d
 bindsym $mod+shift+v split v
