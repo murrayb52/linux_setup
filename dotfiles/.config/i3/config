@@ -279,6 +279,9 @@ smart_borders on
 # udiskie: automount USB drives (e.g. Garmin watch) under /media/muzz
 exec --no-startup-id udiskie --automount --notify --no-tray
 
+# polkit agent: password prompts for pkexec (needs policykit-1-gnome)
+exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+
 # Clipster + Rofi Clipboard Manager
 exec --no-startup-id clipster -d
 bindsym $mod+shift+v split v
