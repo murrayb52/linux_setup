@@ -82,7 +82,7 @@ bindsym $mod+Right focus right
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
+# $mod+Shift+l is the screen lock (below); use $mod+Shift+Up to move up
 bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
@@ -224,6 +224,8 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # Custom commands made by user
 bindsym $mod+shift+Escape exec /home/muzz/.bin/scripts/lockgraphic.sh
+# lock the screen
+bindsym $mod+Shift+l exec --no-startup-id i3lock -c 000000
 bindsym $mod+c exec code
 bindsym $mod+Shift+p exec flameshot gui
 bindsym $mod+Shift+w exec /home/muzz/tools/soupawhisper/run.sh
