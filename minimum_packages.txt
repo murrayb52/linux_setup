@@ -22,6 +22,7 @@ arandr                  # GUI for arranging monitors via xrandr
 autorandr               # auto-switches display profiles on hotplug (see .config/autorandr)
 playerctl               # media player CLI used by status bar scripts
 i3lock                  # screen locker used by some scripts
+xss-lock                # runs lockblur.sh on lock-session and before suspend (lid close)
 i3status                # simple status program for i3 (optional for polybar configs)
 fontconfig              # provides fc-cache to refresh font cache
 fonts-font-awesome      # icon font commonly used by polybar

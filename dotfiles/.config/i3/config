@@ -18,9 +18,9 @@ font pango:Hack, FontAwesome 10
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# xss-lock grabs a logind suspend inhibit lock and runs lockblur.sh to lock the
+# screen before suspend (including lid close). Use loginctl lock-session to lock.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.bin/scripts/lockblur.sh
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -223,8 +223,8 @@ client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-co
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
 # Custom commands made by user
-# lock the screen over a blurred screenshot of the desktop
-bindsym $mod+Shift+l exec --no-startup-id /home/muzz/.bin/scripts/lockblur.sh
+# lock the screen over a blurred screenshot of the desktop (via xss-lock)
+bindsym $mod+Shift+l exec --no-startup-id loginctl lock-session
 bindsym $mod+c exec code
 bindsym $mod+Shift+p exec flameshot gui
 bindsym $mod+Shift+w exec /home/muzz/tools/soupawhisper/run.sh
