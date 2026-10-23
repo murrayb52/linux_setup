@@ -1,0 +1,4 @@
+! Pin the pointer size. Without it, each app guesses the size from the whole X
+! screen when it starts, so logging in with the 4K TV attached gave i3 and
+! polybar a 48px pointer while apps opened later on the laptop panel got 24px.
+Xcursor.size: 24

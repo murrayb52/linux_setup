@@ -112,6 +112,12 @@ if [ -d "$DOTFILES_DIR/.bin" ]; then
     echo "✓ Bin scripts installed (symlink)"
 fi
 
+# X resources (symlinked; Xsession merges ~/.Xresources at login)
+if [ -f "$DOTFILES_DIR/.Xresources" ]; then
+    create_symlink "$DOTFILES_DIR/.Xresources" "$HOME/.Xresources"
+    echo "✓ X resources installed (symlink)"
+fi
+
 
 # Install wallpapers
 echo ""

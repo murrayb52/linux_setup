@@ -56,6 +56,7 @@ Quick reference for common issues encountered during i3-gaps + Polybar setup.
 | IPv4 not displaying | Script updated to use `ip -4 route get` | [[issue-ipv4-polybar-module]] |
 | No taskbar at all | Check Polybar configuration | [[issue-i3-taskbar-not-visible]] |
 | Script won't run | Check execute permissions with `chmod +x` | [[issue-polybar-not-showing]] |
+| Pointer big over desktop/bar, normal in apps | `Xcursor.size` in `~/.Xresources`, then `xrdb -merge ~/.Xresources` and `$mod+Shift+r` | `dotfiles/.Xresources` |
 
 ## Automated Solutions
 The `restore.sh` script now automatically handles:
