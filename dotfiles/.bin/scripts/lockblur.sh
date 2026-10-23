@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # SCRIPT FOR [BLURRED] i3lock CONFIGURATION
-# Locks over a blurred, dimmed screenshot so the desktop looks frosted behind it.
-# Falls back to a plain black lock if the screenshot or blur fails.
+# Locks over a blurred, dimmed screenshot with a frosted padlock badge in the middle
+# (built by lockblur-bg.py). Falls back to a plain black lock if that fails.
 # Run by xss-lock (--transfer-sleep-lock), so it also locks before suspend/lid close.
-# DEPENDENCIES: scrot, ffmpeg, i3lock
-SHOT=$(mktemp --suffix=.png)
-TMPBG=$(mktemp --suffix=.png)
-trap 'rm -f "$SHOT" "$TMPBG"' EXIT INT TERM
+# DEPENDENCIES: i3lock, lockblur-bg.py
+
+# the image is a screenshot, so keep it in the private, RAM-backed runtime dir
+IMG=$(mktemp -p "${XDG_RUNTIME_DIR:-/tmp}" lockblur.XXXXXX)
+trap 'rm -f "$IMG"' EXIT INT TERM
 
 # i3lock forks once it holds the screen, so when this returns we're locked
 lock() {
@@ -19,15 +20,13 @@ lock() {
     fi
 }
 
-if scrot -o "$SHOT" \
-    && ffmpeg -loglevel error -y -i "$SHOT" -vf "gblur=sigma=12,eq=brightness=-0.12" "$TMPBG" \
-    && [ -s "$TMPBG" ]; then
-    # drop the unblurred capture as soon as it has served its purpose
-    rm -f "$SHOT"
-    lock -e -f -i "$TMPBG" || lock -e -f -c 000000
+if raw=$("$(dirname "$0")/lockblur-bg.py" "$IMG"); then
+    lock -e -f --raw="$raw" -i "$IMG" || lock -e -f -c 000000
 else
     lock -e -f -c 000000
 fi
+# i3lock has read the image by the time it forks
+rm -f "$IMG"
 
 # screen is locked: release the sleep delay lock so suspend can go ahead
 if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then

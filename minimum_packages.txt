@@ -23,6 +23,8 @@ autorandr               # auto-switches display profiles on hotplug (see .config
 playerctl               # media player CLI used by status bar scripts
 i3lock                  # screen locker used by some scripts
 xss-lock                # runs lockblur.sh on lock-session and before suspend (lid close)
+python3-pil             # screenshot + blur for lockblur-bg.py
+python3-cairo           # draws the padlock badge for lockblur-bg.py
 i3status                # simple status program for i3 (optional for polybar configs)
 fontconfig              # provides fc-cache to refresh font cache
 fonts-font-awesome      # icon font commonly used by polybar
