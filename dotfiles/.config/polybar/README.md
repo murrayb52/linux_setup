@@ -11,7 +11,7 @@ One config, [`config.ini`](config.ini), with two bars: `main` along the top and
 | Bar | Left | Centre | Right |
 |---|---|---|---|
 | `main` (top) | flockr workspaces, i3 binding mode | date and time | Claude usage, Wi-Fi, Bluetooth, mail, LocalSend |
-| `bottom` | CPU, free memory, free disk, local IP | | volume, battery, lid switch, power menu |
+| `bottom` | CPU, free memory, free disk, local IP, Tailscale IP | | volume, battery, lid switch, power menu |
 
 - **flockr**: workspaces with each agent's status (`!` needs you, `✓` done, spinner working, `○` idle). Needs [flockr](https://github.com/murrayb52/flockr) on `PATH`.
 - **Claude usage**: the 5-hour or 7-day usage gauge, only shown while a Claude Code agent is running. Click to switch.
