@@ -22,7 +22,6 @@ Or run the `restore_config.sh` script from the dotfiles root.
 ## Configuration Details
 
 ### .zshrc
-- Sets Polybar theme option (Option4 by default)
 - Configures Oh-My-Zsh with Powerlevel10k theme
 - Sets custom LS_COLORS with green directories
 - Loads Powerlevel10k configuration from `.p10k.zsh`

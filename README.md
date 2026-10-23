@@ -15,12 +15,10 @@ linux_setup/
 ├── dotfiles/              # All configuration files
 │   ├── .config/
 │   │   ├── i3/           # i3 window manager configuration
-│   │   ├── polybar/      # Polybar status bar configurations
-│   │   │   ├── Option1/          # Polybar theme option 1
-│   │   │   ├── Option2/          # Polybar theme option 2
-│   │   │   ├── Option3 - Nordic/ # Nordic theme
-│   │   │   ├── Option4-Green/    # Green theme (default)
-│   │   │   └── launch.sh         # Main polybar launcher
+│   │   ├── polybar/      # Polybar status bar
+│   │   │   ├── config.ini        # The bars and their modules
+│   │   │   ├── launch.sh         # Starts the bars on every monitor
+│   │   │   └── *.sh              # Module scripts (see polybar/README.md)
 │   │   └── rofi/         # Rofi application launcher configuration
 │   └── .bin/
 │       └── scripts/      # Custom utility scripts
@@ -73,12 +71,12 @@ For Ubuntu:
 
 ## Default Configuration
 - **Window manager**: i3 (i3-gaps features enabled). Config located at [dotfiles/.config/i3/config](dotfiles/.config/i3/config).
-- **Status bar**: Polybar with selectable themes. Default option is `Option5` (see [dotfiles/.config/polybar/launch.sh](dotfiles/.config/polybar/launch.sh)). For `Option5` the launcher starts `main` and `bottom` on the primary monitor and `external` bars on other connected monitors.
+- **Status bar**: Polybar, configured in [dotfiles/.config/polybar/config.ini](dotfiles/.config/polybar/config.ini). [launch.sh](dotfiles/.config/polybar/launch.sh) starts the `main` (top) and `bottom` bars on every connected monitor. See [the polybar README](dotfiles/.config/polybar/README.md).
 - **Launcher**: Rofi styling comes from [dotfiles/.config/rofi/config.rasi](dotfiles/.config/rofi/config.rasi).
 - **Compositor & wallpaper**: Picom (compositor) and feh (wallpaper) are started from i3 config; screen settings come from `.bin/scripts/screen_settings.sh`.
 
 **Customization**
-- **Change polybar theme**: set `POLYBAR_OPTION` in your shell (e.g. add `export POLYBAR_OPTION="Option4"` to `~/.bashrc`) or edit [dotfiles/.config/polybar/launch.sh](dotfiles/.config/polybar/launch.sh).
+- **Edit the status bar**: modify [dotfiles/.config/polybar/config.ini](dotfiles/.config/polybar/config.ini) then reload i3 (`$mod+Shift+r`).
 - **Edit i3 behaviour**: modify [dotfiles/.config/i3/config](dotfiles/.config/i3/config) then reload i3 (`$mod+Shift+r`).
 - **Edit rofi theme**: change [dotfiles/.config/rofi/config.rasi](dotfiles/.config/rofi/config.rasi).
 - **Dotfiles deployment**: re-run `./install.sh` to apply package/font/wallpaper changes, or run [dotfiles/restore_config.sh](dotfiles/restore_config.sh) to (re)create symlinks for configuration files only.
@@ -94,7 +92,7 @@ Window Management
 - `$mod+1-0` - Switch to workspace 1-10
 
 System
-- `$mod+Shift+Escape` - Lock screen
+- `$mod+Shift+l` - Lock screen (it also locks before suspend and on lid close, via xss-lock)
 - `$mod+Shift+r` - Reload i3
 - `$mod+Shift+e` - Exit i3
 
@@ -160,18 +158,12 @@ Location: `~/.config/i3/config`
 - Application assignments
 
 ### Polybar Config
-Location: `~/dotfiles/.config/polybar/config_Option[Option]`
-- Status bar modules
-- Colors and themes
-- System monitoring
-- Media player integration
+Location: `~/.config/polybar/config.ini`
+- Top bar: flockr workspaces, clock, Claude usage, Wi-Fi, Bluetooth, mail, LocalSend
+- Bottom bar: CPU, memory, disk, local IP, volume, battery, lid switch, power menu
+- Colours
 
-Switch themes like this:
-
-```shell
-cd /dotfiles/.config/polybar
-./switch-theme.sh
-```
+Details in [dotfiles/.config/polybar/README.md](dotfiles/.config/polybar/README.md).
 
 ### Rofi Config
 Location: `~/.config/rofi/config.rasi`
@@ -183,15 +175,15 @@ Location: `~/.config/rofi/config.rasi`
 - **Full restore**: [install.sh](install.sh) — one-time installer (packages, fonts, wallpapers, symlinks, makes scripts executable).
 - **Config deploy**: [dotfiles/restore_config.sh](dotfiles/restore_config.sh) — creates backups of existing configs and symlinks repository configs into `~/.config` and `~/.bin`.
 - **Terminal restore**: [restore_terminal.sh](restore_terminal.sh) — installs Zsh configuration and applies terminal settings.
-- **Polybar launcher**: [dotfiles/.config/polybar/launch.sh](dotfiles/.config/polybar/launch.sh) — starts polybar using the selected `POLYBAR_OPTION` (default: Option5).
+- **Polybar launcher**: [dotfiles/.config/polybar/launch.sh](dotfiles/.config/polybar/launch.sh) — starts the bars from `config.ini` on every connected monitor.
 
 ### Utility scripts
 There are a number of utility scripts in the repo to enhance the experience:
+- **lockblur.sh**: the lock screen in use: a blurred screenshot with a frosted padlock badge, built by `lockblur-bg.py`. Run by xss-lock ([dotfiles/.bin/scripts/lockblur.sh](dotfiles/.bin/scripts/lockblur.sh)).
 - **lockpretty.sh**: pretty i3lock wrapper using a background image ([dotfiles/.bin/scripts/lockpretty.sh](dotfiles/.bin/scripts/lockpretty.sh)).
 - **lockpixelate.sh**: pixelated lock screen using scrot + imagemagick ([dotfiles/.bin/scripts/lockpixelate.sh](dotfiles/.bin/scripts/lockpixelate.sh)).
 - **screen_settings.sh**: basic X screen settings (DPMS off, screensaver off) ([dotfiles/.bin/scripts/screen_settings.sh](dotfiles/.bin/scripts/screen_settings.sh)).
-- **Polybar scripts (per theme)**:
-   - `pub-ipv4.sh` - Public IP display
+- **Polybar scripts**: listed in [dotfiles/.config/polybar/README.md](dotfiles/.config/polybar/README.md).
 
 Install to `~/.bin/scripts/` with [dotfiles/restore_config.sh](dotfiles/restore_config.sh).
 

@@ -2,7 +2,7 @@
 # Author: Murray Buchanan
 #
 # Toggles whether closing the laptop lid suspends the system, or does
-# nothing at all. Backs the "lid" polybar module (config_Option5,
+# nothing at all. Backs the "lid" polybar module (config.ini,
 # [module/lid]) as a two-way rocker switch: exactly one of "sleep" / "awake"
 # is ever active, never both, never neither.
 #

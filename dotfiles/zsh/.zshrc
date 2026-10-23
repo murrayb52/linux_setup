@@ -9,9 +9,6 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-# Set Polybar theme (Option1, Option2, Option3, Option4, Option5)
-export POLYBAR_OPTION="Option5"
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 

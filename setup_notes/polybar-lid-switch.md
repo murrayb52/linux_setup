@@ -1,12 +1,12 @@
 # Polybar Lid-Sleep Toggle
 
-**What:** A "lid" module next to the power button (Option5 bottom bar) that lets
+**What:** A "lid" module next to the power button (bottom bar) that lets
 you flip between the default behaviour (lid close suspends) and staying awake
 with the lid closed, via a two-choice popup — the same `custom/menu` mechanism
 as the power button.
 
 **Files:**
-- `dotfiles/.config/polybar/config_Option5` — `[module/lid]` section, and
+- `dotfiles/.config/polybar/config.ini` — `[module/lid]` section, and
   `lid` added to `modules-right` on `[bar/bottom]`.
 - `dotfiles/.bin/scripts/lid-mode.sh` — does the actual toggle. Fully commented;
   `lid-mode.sh {sleep|awake|status}`.

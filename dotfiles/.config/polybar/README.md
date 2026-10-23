@@ -1,154 +1,63 @@
-# Polybar Theme Options Guide
+# Polybar
 
-This directory contains 4 different polybar themes, all consolidated in a single directory structure.
+One config, [`config.ini`](config.ini), with two bars: `main` along the top and
+`bottom` along the bottom. Translucent black with green accents.
 
-## Directory Structure
+`~/.config/polybar` is a symlink to this folder (set up by
+`dotfiles/restore_config.sh`), so edits here are live once polybar restarts.
 
-All config files and scripts are now in the main polybar directory:
-- `config_Option1`, `config_Option2`, `config_Option3`, `config_Option4` - Theme configurations
-- `launch.sh` - Main launch script supporting all themes
-- `switch-theme.sh` - Interactive theme switcher
-- `*.sh` - Consolidated helper scripts used by various themes
+## Bars
 
-## Available Themes
+| Bar | Left | Centre | Right |
+|---|---|---|---|
+| `main` (top) | flockr workspaces, i3 binding mode | date and time | Claude usage, Wi-Fi, Bluetooth, mail, LocalSend |
+| `bottom` | CPU, free memory, free disk, local IP | | volume, battery, lid switch, power menu |
 
-### Option1
-- **Style**: Classic horizontal bar
-- **Modules**: Tidal player controls, workspaces, system info
-- **Bars**: Single top bar
-- **Color Scheme**: Dark theme with blue accents
+- **flockr**: workspaces with each agent's status (`!` needs you, `✓` done, spinner working, `○` idle). Needs [flockr](https://github.com/murrayb52/flockr) on `PATH`.
+- **Claude usage**: the 5-hour or 7-day usage gauge, only shown while a Claude Code agent is running. Click to switch.
+- **Lid switch**: choose whether closing the lid suspends. See `~/.bin/scripts/lid-mode.sh`.
+- **Power menu**: power off, reboot, log out, switch user and lock. Lock runs `loginctl lock-session`, so it's the same blurred lock as Super+Shift+L.
 
-### Option2
-- **Style**: Minimal design
-- **Modules**: Essential system information
-- **Bars**: Single top bar
-- **Color Scheme**: Minimal dark theme
+## Launching
 
-### Option3
-- **Style**: Nordic-inspired design
-- **Modules**: Full system monitoring
-- **Bars**: Dual bars (top and bottom)
-- **Color Scheme**: Nordic palette (blues and grays)
+[`launch.sh`](launch.sh) kills any running bars, then starts `main` and
+`bottom` on every connected monitor, primary first. It runs from the i3 config
+(`exec_always`, so on every i3 reload) and from autorandr's
+`postswitch.d/refresh-desktop` hook when monitors change.
 
-### Option4 (Default)
-- **Style**: Comprehensive dual-bar layout
-- **Modules**: Complete system monitoring, Tidal integration, power menu
-- **Bars**: Top (time, workspaces, media) and Bottom (system stats, volume, power)
-- **Color Scheme**: Green accents on dark background
-- **Scripts**: Includes tidal.sh, playpause.sh, pub-ipv4.sh
+To apply an edit, reload i3 (`$mod+Shift+r`) or run:
 
-## Switching Themes
-
-### Method 1: Interactive Switcher (Easiest)
-```bash
-~/.config/polybar/switch-theme.sh
+```shell
+~/.config/polybar/launch.sh
 ```
 
-### Method 2: Environment Variable (Recommended for Permanent)
-```bash
-# Temporary (current session only)
-export POLYBAR_OPTION="Option3"
+If a bar doesn't appear, run it in a terminal to see polybar's errors:
 
-# Permanent (add to ~/.bashrc or ~/.zshrc)
-echo 'export POLYBAR_OPTION="Option5"' >> ~/.bashrc
-source ~/.bashrc
+```shell
+MONITOR=eDP-1 polybar -c ~/.config/polybar/config.ini main
 ```
 
-### Method 3: Edit launch.sh
-Edit line 13 in `launch.sh`:
-```bash
-POLYBAR_OPTION="${POLYBAR_OPTION:-Option5}"
-```
+## Scripts
 
-## Consolidated Scripts
+| Script | Used by | What it does |
+|---|---|---|
+| `launch.sh` | i3, autorandr | Starts the bars (above) |
+| `i3-mode.sh` | `i3-mode` | Shows the current i3 binding mode (e.g. resize), blinking; hidden otherwise |
+| `claude-usage.sh` | `claude-usage` | Claude subscription usage from Claude Code's OAuth token (`curl`, `jq`) |
+| `wifi-status.sh` | `wifi-module` | Wi-Fi state icon (`nmcli`) |
+| `wifi-menu.sh` | `wifi-module` click | Opens `nmtui` in a floating terminal |
+| `bluetooth-status.sh` | `bluetooth-module` | Bluetooth state icon (`bluetoothctl`) |
+| `bluetooth-menu.sh` | `bluetooth-module` click | Opens `blueman-manager`, floating |
+| `tuta-mail.sh` | `mail-module` click | Opens Tuta Mail, floating |
+| `localsend.sh` | `localsend-module` click | Opens LocalSend, floating |
 
-All helper scripts are now in the main polybar directory:
+The floating windows are set up by `for_window` rules in the i3 config.
 
-- `playpause.sh` - Dynamic play/pause icon (used by Option4)
-- `pub-ipv4.sh` - Show public IPv4 address (used by Option3, Option4)
-- `player-mpris-simple.sh` - Media player integration (used by Option3)
+## Fonts
 
-## Module Overview
-
-### Common Modules (all themes)
-- **i3**: Workspace indicators
-- **time/date**: Clock display
-
-### Option4 Specific
-- **Top Bar**: Time, workspaces, Tidal player
-- **Bottom Bar**: CPU, memory, temperature, disk, network, volume, redshift, power menu
-
-## Customization
-
-To customize a theme:
-
-1. Navigate to the polybar directory:
-   ```bash
-   cd ~/.config/polybar
-   ```
-
-2. Edit the desired config file:
-   ```bash
-   nano config_Option4
-   ```
-
-3. Reload polybar:
-   ```bash
-   ~/.config/polybar/launch.sh
-   ```
-   Or reload i3: `$mod+Shift+r`
-
-## Troubleshooting
-
-### Polybar doesn't start
-- Check if launch.sh is executable: `chmod +x ~/.config/polybar/launch.sh`
-- Check logs: `journalctl --user -u polybar -f`
-
-### Modules not displaying
-- Verify required dependencies are installed (see packages.txt)
-- Check script permissions: `chmod +x ~/.config/polybar/*.sh`
-- Ensure scripts are executable in the main polybar directory
-
-### Theme not switching
-- Verify POLYBAR_OPTION is set: `echo $POLYBAR_OPTION`
-- Check that config_OptionX file exists
-- Reload i3 after changing the variable
-
-## Creating Your Own Theme
-
-1. Copy an existing config:
-   ```bash
-   cd ~/.config/polybar
-   cp config_Option4 config_MyCustomTheme
-   ```
-
-2. Edit the config file:
-   ```bash
-   nano config_MyCustomTheme
-   ```
-
-3. Set it as active:
-   ```bash
-   export POLYBAR_OPTION="MyCustomTheme"
-   ```
-
-## Dependencies
-
-Required for all themes:
-- `polybar`
-- `Font Awesome` (for icons)
-- `Hack` font
-
-Additional for media modules:
-- `playerctl` - Media player control
-- `tidal-hifi` - Tidal desktop client
-
-Additional for system modules:
-- `wireless_tools` - Network info
-- `sysstat` - System statistics
-
----
-
-**Current Default**: Option4  
-**Recommended for beginners**: Option4 (most features)  
-**Recommended for minimal setup**: Option2
+| Font | Used for |
+|---|---|
+| FontAwesome (4) | Most icons |
+| Hack | Bar text |
+| Hack Nerd Font | Wi-Fi and Bluetooth state icons (FontAwesome 4 has no on/off/connected variants) |
+| DejaVu Sans | flockr's status glyphs |

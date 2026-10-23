@@ -46,7 +46,7 @@ for i in "${!entries[@]}"; do
     MENU+="[$i] $preview"$'\n'
 done
 
-# Colours pulled from the bottom polybar's [color] section (config_Option5)
+# Colours pulled from the bottom polybar's [color] section (config.ini)
 # so this popup matches the bar it's launched from: overall background/text
 # match the bar itself, and the selected row uses the same green
 # (strong-highlight) the bar shows behind the lid/power icon once its menu
