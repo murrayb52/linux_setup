@@ -38,14 +38,14 @@
 #    paste keybinding gets the right text regardless of which one it reads
 #    from (Shift+Insert conventionally pastes PRIMARY in many X11 apps).
 
-mapfile -d '' -t entries < <(clipster -c -o -n 20 -0)
-
-MENU=""
-for i in "${!entries[@]}"; do
-    preview="${entries[$i]//$'\n'/ ⏎ }"
-    MENU+="[$i] $preview"$'\n'
-done
-
+# Housekeeping (added so secrets can be got rid of, not just hidden):
+#   - Alt+Shift+Delete wipes everything via clipboard-wipe.sh (memory, live
+#     selection, the plaintext history file on disk and an fstrim), after a
+#     "Yes, delete all" / "No" confirm
+#   - Alt+Delete on a highlighted entry forgets just that one (from both
+#     boards), after a Yes/No confirm, then the picker reopens so several can
+#     be removed in a row
+#
 # Colours pulled from the bottom polybar's [color] section (config.ini)
 # so this popup matches the bar it's launched from: overall background/text
 # match the bar itself, and the selected row uses the same green
@@ -94,16 +94,60 @@ entry {
 }
 '
 
-CHOICE=$(printf '%s' "${MENU%$'\n'}" | rofi -dmenu -p "📋 Clipboard" -i -location 0 -theme-str "$ROFI_THEME")
+# confirm "question" "yes label" - rofi Yes/No (defaults to No); succeeds only
+# on the yes label.
+confirm() {
+    local answer
+    answer=$(printf 'No\n%s\n' "$2" | rofi -dmenu -p "$1" -i -no-custom -theme-str "$ROFI_THEME")
+    [ "$answer" = "$2" ]
+}
 
-if [ -n "$CHOICE" ]; then
+while true; do
+    mapfile -d '' -t entries < <(clipster -c -o -n 20 -0)
+
+    MENU=""
+    for i in "${!entries[@]}"; do
+        preview="${entries[$i]//$'\n'/ ⏎ }"
+        MENU+="[$i] $preview"$'\n'
+    done
+
+    CHOICE=$(printf '%s' "${MENU%$'\n'}" | rofi -dmenu -p "📋 Clipboard" -i -location 0 \
+        -kb-custom-1 "Alt+Delete" \
+        -kb-custom-2 "Alt+Shift+Delete" \
+        -mesg "Enter: paste    Alt+Delete: forget entry    Alt+Shift+Delete: delete all" \
+        -theme-str "$ROFI_THEME")
+    STATUS=$?
+
+    if [ "$STATUS" -eq 11 ]; then
+        # Alt+Shift+Delete acts on the whole history, so it doesn't need a
+        # highlighted row.
+        confirm "Delete ALL clipboard history?" "Yes, delete all" && "$(dirname "$0")/clipboard-wipe.sh"
+        exit 0
+    fi
+
+    [ -z "$CHOICE" ] && exit 0
+
     if [[ "$CHOICE" =~ ^\[([0-9]+)\] ]] && [ -n "${entries[${BASH_REMATCH[1]}]+_}" ]; then
         TEXT="${entries[${BASH_REMATCH[1]}]}"
     else
         # Fell through to a custom/unmatched rofi entry - use it verbatim.
         TEXT="$CHOICE"
     fi
+
+    if [ "$STATUS" -eq 10 ]; then
+        # Alt+Delete: forget this entry from both boards, plus the live
+        # clipboard if it's what is currently sitting there.
+        if confirm "Forget this entry?" "Yes"; then
+            clipster -c --delete="$TEXT"
+            clipster -p --delete="$TEXT"
+            [ "$(xsel -b -o)" = "$TEXT" ] && xsel -b -c
+            [ "$(xsel -p -o)" = "$TEXT" ] && xsel -p -c
+        fi
+        continue
+    fi
+
     printf '%s' "$TEXT" | clipster -c
     printf '%s' "$TEXT" | clipster -p
     xdotool key --clearmodifiers shift+Insert
-fi
+    exit 0
+done

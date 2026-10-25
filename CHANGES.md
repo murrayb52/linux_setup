@@ -248,3 +248,26 @@ All configurations are now clean, documented, and ready for use! 🎉
 - `$mod+v` - Open clipboard menu at cursor
 - `$mod+Shift+v` - Split vertical (moved from $mod+v)
 
+## 2026-10-25 - Clipboard: forget entries and wipe history
+
+Clipster keeps its history as plaintext JSON in `~/.local/share/clipster/history`,
+so hiding entries in the picker left secrets on disk.
+
+### Added
+- `dotfiles/.config/rofi/clipboard-wipe.sh` - stops the daemon, clears both
+  live selections (CLIPBOARD and PRIMARY), shreds the history file and any
+  leftover `tmp*` write files, starts a fresh daemon, then runs `fstrim /` via
+  `pkexec` (polkit password prompt, in the background) to discard the freed
+  blocks that held earlier saved copies
+
+### Modified
+- `dotfiles/.config/rofi/clipboard.sh`:
+  - `Alt+Shift+Delete` deletes all history: confirm "Yes, delete all" / "No",
+    then runs the wipe
+  - `Alt+Delete` on an entry forgets just that one from both boards and the
+    live clipboard (Yes/No confirm), then reopens the picker
+
+### Limitation
+- Clipster saves via tmp-file + rename, so older saved copies are freed rather
+  than overwritten and `shred` cannot reach them on ext4/NVMe. TRIM makes them
+  much harder to recover; only full-disk encryption makes them unrecoverable.
