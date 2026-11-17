@@ -183,6 +183,7 @@ There are a number of utility scripts in the repo to enhance the experience:
 - **lockpretty.sh**: pretty i3lock wrapper using a background image ([dotfiles/.bin/scripts/lockpretty.sh](dotfiles/.bin/scripts/lockpretty.sh)).
 - **lockpixelate.sh**: pixelated lock screen using scrot + imagemagick ([dotfiles/.bin/scripts/lockpixelate.sh](dotfiles/.bin/scripts/lockpixelate.sh)).
 - **screen_settings.sh**: basic X screen settings (DPMS off, screensaver off) ([dotfiles/.bin/scripts/screen_settings.sh](dotfiles/.bin/scripts/screen_settings.sh)).
+- **type-email.sh**: types my email address into the focused window (`$mod+Shift+t`). The address is read from `~/.config/private/email`, which is not in the repo; on a fresh machine create it with `mkdir -p ~/.config/private && echo you@example.com > ~/.config/private/email && chmod 600 ~/.config/private/email` ([dotfiles/.bin/scripts/type-email.sh](dotfiles/.bin/scripts/type-email.sh)).
 - **Polybar scripts**: listed in [dotfiles/.config/polybar/README.md](dotfiles/.config/polybar/README.md).
 
 Install to `~/.bin/scripts/` with [dotfiles/restore_config.sh](dotfiles/restore_config.sh).
